@@ -6,13 +6,15 @@ public class Usuario {
     private String cpf;
     private String email;
     private String tipo;
+    private String senha;
 
-    public Usuario(int id_usuario, String nome, String cpf, String email, String tipo) {
+    public Usuario(int id_usuario, String nome, String cpf, String email, String tipo, String senha) {
         this.id_usuario = id_usuario;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.tipo = tipo;
+        this.senha = senha;
     }
 
     public int getId_usuario() {
@@ -53,6 +55,14 @@ public class Usuario {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
     
