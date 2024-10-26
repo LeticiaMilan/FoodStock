@@ -1,52 +1,70 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Movimentacao {
-    private int id_movimentacao;
-    private String tipo_movimentacao;
-    private int quantidade;    
-    private Date data;
-    private int id_produto;
-    private int id_usuario;
-    private int id_fornecedor;
-    private int id_cliente;
+    private int idMovimentacao;
+    private TipoMovimentacao tipoMovimentacao;
+    private int quantidade;
+    private LocalDate data;
+    private Produto produto;
+    private Usuario usuario;
+    private Fornecedor fornecedor;
+    private Cliente cliente;
 
-    public Movimentacao(int id_movimentacao, String tipo_movimentacao, int quantidade, Date data, int id_produto, int id_usuario, int id_fornecedor, int id_cliente) {
-        this.id_movimentacao = id_movimentacao;
-        this.tipo_movimentacao = tipo_movimentacao;
+    public Movimentacao(int idMovimentacao, TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
+        this.idMovimentacao = idMovimentacao;
+        this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.data = data;
-        this.id_produto = id_produto;
-        this.id_usuario = id_usuario;
-        this.id_fornecedor = id_fornecedor;
-        this.id_cliente = id_cliente;
+        this.produto = produto;
+        this.usuario = usuario;
+        this.fornecedor = fornecedor;
+        this.cliente = cliente;
     }
 
-    public Movimentacao(String tipo_movimentacao, int quantidade, Date data, int id_produto, int id_usuario, int id_fornecedor, int id_cliente) {
-        this.tipo_movimentacao = tipo_movimentacao;
+    public Movimentacao(TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
+        this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.data = data;
-        this.id_produto = id_produto;
-        this.id_usuario = id_usuario;
-        this.id_fornecedor = id_fornecedor;
-        this.id_cliente = id_cliente;
+        this.produto = produto;
+        this.usuario = usuario;
+        this.fornecedor = fornecedor;
+        this.cliente = cliente;
     }
 
-    public int getId_movimentacao() {
-        return id_movimentacao;
+    public Movimentacao(TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor) {
+        this.tipoMovimentacao = tipoMovimentacao;
+        this.quantidade = quantidade;
+        this.data = data;
+        this.produto = produto;
+        this.usuario = usuario;
+        this.fornecedor = fornecedor;
     }
 
-    public void setId_movimentacao(int id_movimentacao) {
-        this.id_movimentacao = id_movimentacao;
+    public Movimentacao(TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Cliente cliente) {
+        this.tipoMovimentacao = tipoMovimentacao;
+        this.quantidade = quantidade;
+        this.data = data;
+        this.produto = produto;
+        this.usuario = usuario;
+        this.cliente = cliente;
     }
 
-    public String getTipo_movimentacao() {
-        return tipo_movimentacao;
+    public int getIdMovimentacao() {
+        return idMovimentacao;
     }
 
-    public void setTipo_movimentacao(String tipo_movimentacao) {
-        this.tipo_movimentacao = tipo_movimentacao;
+    public void setIdMovimentacao(int idMovimentacao) {
+        this.idMovimentacao = idMovimentacao;
+    }
+
+    public TipoMovimentacao getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
+
+    public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+        this.tipoMovimentacao = tipoMovimentacao;
     }
 
     public int getQuantidade() {
@@ -57,44 +75,45 @@ public class Movimentacao {
         this.quantidade = quantidade;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 
-    public int getId_produto() {
-        return id_produto;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setId_produto(int id_produto) {
-        this.id_produto = id_produto;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
-    public int getId_usuario() {
-        return id_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public int getId_fornecedor() {
-        return id_fornecedor;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setId_fornecedor(int id_fornecedor) {
-        this.id_fornecedor = id_fornecedor;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
+    
     
 }
