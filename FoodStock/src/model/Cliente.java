@@ -29,6 +29,20 @@ public class Cliente {
         this.pais = pais;
     }
 
+    public Cliente(String nome, String cpf_cnpj, String email, String telefone, String logradouro, String bairro, String numero, String cep, String municipio, String estado, String pais) {
+        this.nome = nome;
+        this.cpf_cnpj = cpf_cnpj;
+        this.email = email;
+        this.telefone = telefone;
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.numero = numero;
+        this.cep = cep;
+        this.municipio = municipio;
+        this.estado = estado;
+        this.pais = pais;
+    }
+
     public int getId_produto() {
         return id_produto;
     }

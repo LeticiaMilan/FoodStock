@@ -23,6 +23,16 @@ public class Movimentacao {
         this.id_cliente = id_cliente;
     }
 
+    public Movimentacao(String tipo_movimentacao, int quantidade, Date data, int id_produto, int id_usuario, int id_fornecedor, int id_cliente) {
+        this.tipo_movimentacao = tipo_movimentacao;
+        this.quantidade = quantidade;
+        this.data = data;
+        this.id_produto = id_produto;
+        this.id_usuario = id_usuario;
+        this.id_fornecedor = id_fornecedor;
+        this.id_cliente = id_cliente;
+    }
+
     public int getId_movimentacao() {
         return id_movimentacao;
     }
