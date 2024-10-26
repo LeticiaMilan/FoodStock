@@ -9,7 +9,7 @@ public class Conexao {
     private Connection con;
 
     public Conexao() {
-        url = "jdbc:postgresql://localhost:5432/Estoque";
+        url = "jdbc:postgresql://localhost:5432/Estoque_BD";
         usuario = "postgres";
         senha = "123";
 
