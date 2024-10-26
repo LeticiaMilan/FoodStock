@@ -1,54 +1,81 @@
 package model;
 
 public class Cliente {
-    private int id_produto;
+
+    private int idCliente;
     private String nome;
-    private String cpf_cnpj;    
+    private String cpfCnpj;
     private String email;
-    private String telefone;
-    private String logradouro;
-    private String bairro;
-    private String numero;
-    private String cep;
-    private String municipio;
-    private String estado;
-    private String pais;
+    private Endereco endereco;
+    private Telefone telefone;
 
-    public Cliente(int id_produto, String nome, String cpf_cnpj, String email, String telefone, String logradouro, String bairro, String numero, String cep, String municipio, String estado, String pais) {
-        this.id_produto = id_produto;
+    public Cliente(int idCliente, String nome, String cpfCnpj, String email, Endereco endereco, Telefone telefone) {
+        this.idCliente = idCliente;
         this.nome = nome;
-        this.cpf_cnpj = cpf_cnpj;
+        this.cpfCnpj = cpfCnpj;
+        this.email = email;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
+    public Cliente(String nome, String cpfCnpj, String email, Endereco endereco, Telefone telefone) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.email = email;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
+    public Cliente(String nome, String cpfCnpj, String email, Endereco endereco) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.email = email;
+        this.endereco = endereco;
+    }
+
+    public Cliente(String nome, String cpfCnpj, String email, Telefone telefone) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
         this.email = email;
         this.telefone = telefone;
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.numero = numero;
-        this.cep = cep;
-        this.municipio = municipio;
-        this.estado = estado;
-        this.pais = pais;
     }
 
-    public Cliente(String nome, String cpf_cnpj, String email, String telefone, String logradouro, String bairro, String numero, String cep, String municipio, String estado, String pais) {
+    public Cliente(String nome, String cpfCnpj, Endereco endereco, Telefone telefone) {
         this.nome = nome;
-        this.cpf_cnpj = cpf_cnpj;
-        this.email = email;
+        this.cpfCnpj = cpfCnpj;
+        this.endereco = endereco;
         this.telefone = telefone;
-        this.logradouro = logradouro;
-        this.bairro = bairro;
-        this.numero = numero;
-        this.cep = cep;
-        this.municipio = municipio;
-        this.estado = estado;
-        this.pais = pais;
     }
 
-    public int getId_produto() {
-        return id_produto;
+    public Cliente(String nome, String cpfCnpj, String email) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.email = email;
     }
 
-    public void setId_produto(int id_produto) {
-        this.id_produto = id_produto;
+    public Cliente(String nome, String cpfCnpj, Endereco endereco) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.endereco = endereco;
+    }
+
+    public Cliente(String nome, String cpfCnpj, Telefone telefone) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+        this.telefone = telefone;
+    }
+
+    public Cliente(String nome, String cpfCnpj) {
+        this.nome = nome;
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNome() {
@@ -59,12 +86,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getCpf_cnpj() {
-        return cpf_cnpj;
+    public String getCpfCnpj() {
+        return cpfCnpj;
     }
 
-    public void setCpf_cnpj(String cpf_cnpj) {
-        this.cpf_cnpj = cpf_cnpj;
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 
     public String getEmail() {
@@ -75,68 +102,21 @@ public class Cliente {
         this.email = email;
     }
 
-    public String getTelefone() {
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Telefone getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
     }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getMunicipio() {
-        return municipio;
-    }
-
-    public void setMunicipio(String municipio) {
-        this.municipio = municipio;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
+    
+    
 }
