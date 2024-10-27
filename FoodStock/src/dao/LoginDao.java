@@ -1,17 +1,15 @@
 package dao;
 
+import connection.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import model.Usuario;
 
 public class LoginDao {
 
     private static Connection con;
 
-    private static Usuario usuario;
-
-    public static void fazerLogin(String email, String senha) {
+    public void fazerLogin(String email, String senha) {
         String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?;";
 
         con = new Conexao().obterConexao();
@@ -21,8 +19,13 @@ public class LoginDao {
             pstm.setString(1, email);
             pstm.setString(2, senha);
             ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                System.out.println("Login bem-sucedido!");
+            } else {
+                System.out.println("Usuário não encontrado ou senha incorreta.");
+            }
         } catch (Exception e) {
-            System.out.println("E-mail ou senha incorretos. Erro: " + e);
+            System.out.println("Não foi possível fazer login. Erro: " + e);
         }
     }
 }

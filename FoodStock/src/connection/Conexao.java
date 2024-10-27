@@ -1,4 +1,4 @@
-package dao;
+package connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ public class Conexao {
     private Connection con;
     
     public Conexao() {
-        url = "jdbc:postgresql://localhost:5432/Estoque";
+        url = "jdbc:postgresql://localhost:5432/Foodstock";
         usuario = "postgres";
         senha = "dbadmin";
         
