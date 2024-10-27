@@ -22,10 +22,8 @@ public class MovimentacaoView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -77,34 +75,22 @@ public class MovimentacaoView extends javax.swing.JFrame {
         jPanel2.add(jButton1);
 
         jButton2.setBackground(new java.awt.Color(32, 80, 94));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_home.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_clientes.png"))); // NOI18N
         jButton2.setBorder(null);
         jButton2.setBorderPainted(false);
         jPanel2.add(jButton2);
 
-        jButton3.setBackground(new java.awt.Color(32, 80, 94));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_home.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setBorderPainted(false);
-        jPanel2.add(jButton3);
-
         jButton4.setBackground(new java.awt.Color(32, 80, 94));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_home.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_produtos.png"))); // NOI18N
         jButton4.setBorder(null);
         jButton4.setBorderPainted(false);
         jPanel2.add(jButton4);
 
-        jButton5.setBackground(new java.awt.Color(32, 80, 94));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_home.png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jPanel2.add(jButton5);
-
-        jButton6.setBackground(new java.awt.Color(32, 80, 94));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_home.png"))); // NOI18N
-        jButton6.setBorder(null);
-        jButton6.setBorderPainted(false);
-        jPanel2.add(jButton6);
+        jButton3.setBackground(new java.awt.Color(32, 80, 94));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_mov_estoque.png"))); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.setBorderPainted(false);
+        jPanel2.add(jButton3);
 
         javax.swing.GroupLayout jPnMenuLayout = new javax.swing.GroupLayout(jPnMenu);
         jPnMenu.setLayout(jPnMenuLayout);
@@ -249,8 +235,6 @@ public class MovimentacaoView extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
