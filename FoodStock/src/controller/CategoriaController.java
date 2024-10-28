@@ -10,4 +10,8 @@ public class CategoriaController {
     public ArrayList<Categoria> buscarCategorias() {
         return categoriaDao.buscarCategorias();
     }
+    
+    public String buscarCategoriaPorId(int id) {
+        return categoriaDao.buscarCategoriaPorId(id);
+    }
 }

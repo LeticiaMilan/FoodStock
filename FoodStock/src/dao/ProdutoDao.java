@@ -96,7 +96,7 @@ public class ProdutoDao {
     }
     
     public ArrayList<Produto> obterProdutos() {
-        String sql = "SELECT * FROM usuarios";
+        String sql = "SELECT * FROM produtos";
         con = new Conexao().obterConexao();
         
         ArrayList<Produto> listaProdutos = new ArrayList();
@@ -112,15 +112,15 @@ public class ProdutoDao {
                 double preco_venda = rs.getDouble("preco_venda");
                 double preco_custo = rs.getDouble("preco_custo");
                 int quantidade = rs.getInt("quantidade");
-                int categoria = rs.getInt("categoria");
-                int fornecedor = rs.getInt("fornecedor");
+                int categoria = rs.getInt("id_categoria");
+                int fornecedor = rs.getInt("id_fornecedor");
                 
                 produto = new Produto(id, nome, descricao, preco_venda, preco_custo, quantidade, categoria, fornecedor);
                 listaProdutos.add(produto);
             }
             
         } catch(Exception e) {
-            System.out.println("Erro ao buscar todos os usuários. Erro: " + e);
+            System.out.println("Erro ao buscar todos os produtos. Erro: " + e);
         }
         
         return listaProdutos;

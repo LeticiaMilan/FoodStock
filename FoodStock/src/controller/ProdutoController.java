@@ -14,4 +14,8 @@ public class ProdutoController {
     public ArrayList<Produto> obterProdutos() {
         return produtoDao.obterProdutos();
     }
+    
+    public void deletarProdutoPorId(int id) {
+        produtoDao.deletarProdutoPorId(id);
+    }
 }

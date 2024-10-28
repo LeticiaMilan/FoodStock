@@ -123,6 +123,11 @@ public class InserirProdutoView extends javax.swing.JFrame {
 
         jBtVoltar.setBackground(new java.awt.Color(253, 253, 253));
         jBtVoltar.setText("Voltar");
+        jBtVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -248,6 +253,12 @@ public class InserirProdutoView extends javax.swing.JFrame {
     private void jTFNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFNomeActionPerformed
+
+    private void jBtVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVoltarActionPerformed
+        ProdutosView produtosView = new ProdutosView();
+        this.setVisible(false);
+        produtosView.setVisible(true);
+    }//GEN-LAST:event_jBtVoltarActionPerformed
 
     private void limparCampos() {
         jTFNome.setText("");

@@ -10,4 +10,8 @@ public class FornecedorController {
     public ArrayList<Fornecedor> buscarFornecedores() {
         return fornecedorDao.buscarFornecedores();
     }
+    
+    public String buscarFornecedorPorId(int id) {
+        return fornecedorDao.buscarFornecedorPorId(id);
+    }
 }

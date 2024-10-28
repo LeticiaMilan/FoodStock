@@ -9,13 +9,14 @@ import model.Fornecedor;
 
 public class FornecedorDao {
     private static Fornecedor fornecedor;
+    private static Connection con;
     
     public ArrayList<Fornecedor> buscarFornecedores() {
         ArrayList<Fornecedor> fornecedores = new ArrayList<>();
         String sql = "SELECT * FROM fornecedores";
 
         try {
-            Connection con = new Conexao().obterConexao();
+            con = new Conexao().obterConexao();
             PreparedStatement pstm = con.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
 
@@ -35,5 +36,29 @@ public class FornecedorDao {
         }
 
         return fornecedores;
+    }
+    
+    public String buscarFornecedorPorId(int id) {
+        String sql = "SELECT nome FROM fornecedores where id_fornecedor = ?";
+        String nome = null;
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                nome = rs.getString("nome");
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar fornecedor. Erro: " + e);
+        }
+        
+        return nome;
     }
 }

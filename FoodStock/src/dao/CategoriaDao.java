@@ -9,13 +9,14 @@ import model.Categoria;
 
 public class CategoriaDao {
     private static Categoria categoria;
+    private static Connection con;
     
     public ArrayList<Categoria> buscarCategorias() {
         ArrayList<Categoria> categorias = new ArrayList<>();
         String sql = "SELECT * FROM categorias";
 
         try {
-            Connection con = new Conexao().obterConexao();
+            con = new Conexao().obterConexao();
             PreparedStatement pstm = con.prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
 
@@ -31,5 +32,29 @@ public class CategoriaDao {
         }
 
         return categorias;
+    }
+    
+    public String buscarCategoriaPorId(int id) {
+        String sql = "SELECT nome FROM categorias where id_categoria = ?";
+        String nome = null;
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                nome = rs.getString("nome");
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar categoria. Erro: " + e);
+        }
+        
+        return nome;
     }
 }
