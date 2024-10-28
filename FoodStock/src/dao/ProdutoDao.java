@@ -95,7 +95,7 @@ public class ProdutoDao {
         }
     }
     
-    public static ArrayList<Produto> obterProdutos() {
+    public ArrayList<Produto> obterProdutos() {
         String sql = "SELECT * FROM usuarios";
         con = new Conexao().obterConexao();
         
