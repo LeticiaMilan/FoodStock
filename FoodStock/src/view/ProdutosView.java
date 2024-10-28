@@ -219,17 +219,26 @@ public class ProdutosView extends javax.swing.JFrame {
                 produtoController.deletarProdutoPorId(id);
                 
                 JOptionPane.showMessageDialog(null, "Produto deletado com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
-            } else if (resposta == JOptionPane.CANCEL_OPTION) {
-                return;
+                atualizarTabela();
             }
-
-            int id = (int) jTable1.getModel().getValueAt(linhaSelecionada, 0);
-            produtoController.deletarProdutoPorId(id);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jBtDeletarActionPerformed
 
+    private void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        ArrayList<Produto> listaProdutos = produtoController.obterProdutos();
+        for (Produto produto : listaProdutos) {
+            Object[] rowData = { produto.getId_produto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), 
+                                 produto.getPrecoCusto(), produto.getQuantidade(), produto.getCategoria(), produto.getFornecedor() };
+            model.addRow(rowData);
+        }
+    }
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
