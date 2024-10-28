@@ -43,7 +43,7 @@ public class ProdutoDao {
     }
     
     public void deletarProdutoPorId(int id) {
-        String sql = "DELETE FROM produtos WHERE id = ?;";
+        String sql = "DELETE FROM produtos WHERE id_produto = ?;";
         
         con = new Conexao().obterConexao();
         
@@ -66,7 +66,7 @@ public class ProdutoDao {
     }
     
     public static void atualizarProduto(int id, String nome, String descricao, double preco_venda, double preco_custo, int quantidade) {
-        String sql = "UPDATE produtos SET nome = ?, descricao = ?, preco_venda = ?, preco_custo = ?, quantidade = ? WHERE id = ?;";
+        String sql = "UPDATE produtos SET nome = ?, descricao = ?, preco_venda = ?, preco_custo = ?, quantidade = ? WHERE id_produto = ?;";
         
         con = new Conexao().obterConexao();
         
@@ -106,7 +106,7 @@ public class ProdutoDao {
             ResultSet rs = pstm.executeQuery();
             
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_produto");
                 String nome = rs.getString("nome");
                 String descricao = rs.getString("descricao");
                 double preco_venda = rs.getDouble("preco_venda");
