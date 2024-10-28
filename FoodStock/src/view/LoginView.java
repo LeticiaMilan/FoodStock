@@ -50,6 +50,8 @@ public class LoginView extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(6, 57, 74));
         jLabel7.setText("Não possui uma conta?");
 
+        jBtCriarConta.setBackground(new java.awt.Color(31, 73, 90));
+        jBtCriarConta.setForeground(new java.awt.Color(253, 253, 253));
         jBtCriarConta.setText("Criar conta");
         jBtCriarConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,6 +118,8 @@ public class LoginView extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/lockIcon.png"))); // NOI18N
         jLabel10.setText("   ");
 
+        jBtFazerLogin.setBackground(new java.awt.Color(253, 253, 253));
+        jBtFazerLogin.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jBtFazerLogin.setText("Fazer login");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -146,7 +150,7 @@ public class LoginView extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(162, 162, 162))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jBtFazerLogin)
+                                .addComponent(jBtFazerLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(176, 176, 176))))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,8 +171,8 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPasswordField1))
-                .addGap(45, 45, 45)
-                .addComponent(jBtFazerLogin)
+                .addGap(31, 31, 31)
+                .addComponent(jBtFazerLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
@@ -188,7 +192,9 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtCriarContaActionPerformed
-        // TODO add your handling code here:
+        RegistroView rv = new RegistroView();
+        this.setVisible(false);
+        rv.setVisible(true);
     }//GEN-LAST:event_jBtCriarContaActionPerformed
 
     public static void main(String args[]) {

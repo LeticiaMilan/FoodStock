@@ -1,6 +1,13 @@
 package view;
 
+import controller.RegistroController;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 public class RegistroView extends javax.swing.JFrame {
+    
+    RegistroController registroController = new RegistroController();
 
     public RegistroView() {
         initComponents();
@@ -19,18 +26,19 @@ public class RegistroView extends javax.swing.JFrame {
         jBtFazerLogin = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTFEmail = new javax.swing.JTextField();
+        jTFNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jBtCriarConta = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jPFSenha = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTFEmail1 = new javax.swing.JTextField();
+        jTFEmail = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTFEmail2 = new javax.swing.JTextField();
+        jTFCpf = new javax.swing.JTextField();
+        jBtCriarConta = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -55,6 +63,8 @@ public class RegistroView extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(6, 57, 74));
         jLabel7.setText("Já possui uma conta?");
 
+        jBtFazerLogin.setBackground(new java.awt.Color(31, 73, 90));
+        jBtFazerLogin.setForeground(new java.awt.Color(253, 253, 253));
         jBtFazerLogin.setText("Fazer login");
         jBtFazerLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,9 +79,6 @@ public class RegistroView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
                         .addComponent(jBtFazerLogin))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -82,7 +89,10 @@ public class RegistroView extends javax.swing.JFrame {
                         .addComponent(jLabel5))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jLabel7)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -107,7 +117,7 @@ public class RegistroView extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/userIcon.png"))); // NOI18N
 
-        jTFEmail.setToolTipText("Seu e-mail");
+        jTFNome.setToolTipText("Seu nome");
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(253, 253, 253));
@@ -120,7 +130,7 @@ public class RegistroView extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/lockIcon.png"))); // NOI18N
         jLabel10.setText("   ");
 
-        jBtCriarConta.setText("Criar conta");
+        jPFSenha.setToolTipText("Senha");
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(253, 253, 253));
@@ -128,7 +138,12 @@ public class RegistroView extends javax.swing.JFrame {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/userIcon.png"))); // NOI18N
 
-        jTFEmail1.setToolTipText("Seu e-mail");
+        jTFEmail.setToolTipText("Seu e-mail");
+        jTFEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFEmailActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(253, 253, 253));
@@ -136,7 +151,20 @@ public class RegistroView extends javax.swing.JFrame {
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/userIcon.png"))); // NOI18N
 
-        jTFEmail2.setToolTipText("Seu e-mail");
+        jTFCpf.setToolTipText("Seu CPF");
+
+        jBtCriarConta.setBackground(new java.awt.Color(253, 253, 253));
+        jBtCriarConta.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jBtCriarConta.setText("Criar conta");
+        jBtCriarConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtCriarContaActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(253, 253, 253));
+        jLabel14.setText("(apenas números)");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,10 +173,6 @@ public class RegistroView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
-                        .addComponent(jBtCriarConta)
-                        .addGap(176, 176, 176))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -159,22 +183,28 @@ public class RegistroView extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTFEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel9)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel11)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTFEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel12)
+                                    .addComponent(jTFEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel14))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel13)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTFEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(97, Short.MAX_VALUE))))
+                                .addComponent(jPFSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jBtCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,28 +217,30 @@ public class RegistroView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTFEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTFEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPFSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addGap(24, 24, 24)
-                .addComponent(jBtCriarConta)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jBtCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,9 +259,110 @@ public class RegistroView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtFazerLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtFazerLoginActionPerformed
-        // TODO add your handling code here:
+        LoginView lv = new LoginView();
+        
+        this.setVisible(false);
+        lv.setVisible(true);
     }//GEN-LAST:event_jBtFazerLoginActionPerformed
 
+    private void jBtCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtCriarContaActionPerformed
+        String nome = jTFNome.getText();
+        String email = jTFEmail.getText();
+        String cpf = jTFCpf.getText();
+        String senha = jPFSenha.getText();
+        
+        if(!validarEmail(jTFEmail)) {
+            JOptionPane.showMessageDialog(null, "Insira um e-mail válido.", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(!validarSenha(jPFSenha)) {
+            JOptionPane.showMessageDialog(null, "A senha deve ter pelo menos 6 caracteres.", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(!validarCpf(jTFCpf)) {
+            JOptionPane.showMessageDialog(null, "Insira um CPF válido.", "Alerta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int resultado = registroController.registrarUsuario(nome, cpf, email, senha);
+        
+        switch(resultado) {
+            case 0:
+                JOptionPane.showMessageDialog(null, "Usuário não inserido.", "Alerta", JOptionPane.WARNING_MESSAGE);
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "Usuário inserido com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                limparCampos();
+                break;
+                
+            case 2:
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Alerta", JOptionPane.WARNING_MESSAGE);
+                break;
+                
+            case 3:
+                JOptionPane.showMessageDialog(null, "CPF já cadastrado.", "Alerta", JOptionPane.WARNING_MESSAGE);
+                break;
+            
+            case 4:
+                JOptionPane.showMessageDialog(null, "E-mail já cadastrado.", "Alerta", JOptionPane.WARNING_MESSAGE);
+                break;
+        }
+    }//GEN-LAST:event_jBtCriarContaActionPerformed
+
+    private void jTFEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFEmailActionPerformed
+    
+    private void limparCampos() {
+        jTFNome.setText("");
+        jTFEmail.setText("");
+        jTFCpf.setText("");
+        jPFSenha.setText("");
+    }
+    
+    public static boolean validarEmail(JTextField campoEmail) {
+        String email = campoEmail.getText();
+        String regexEmail = "^[\\w-\\.]+@[\\w-]+\\.[a-z]{2,3}([\\.][a-z]{2})?$";
+        
+        return email.matches(regexEmail);
+    }
+    
+    public static boolean validarSenha(JPasswordField campoSenha) {
+        String senha = campoSenha.getText();
+        
+        int contador = 0;
+
+        for (int i = 0; i < senha.length(); i++) {
+            contador++;
+        }
+        
+        if(contador < 6) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public static boolean validarCpf(JTextField campoCpf) {
+        String cpf = campoCpf.getText();
+        
+        int contador = 0;
+        boolean contemLetra = false;
+
+        for (int i = 0; i < cpf.length(); i++) {
+            contador++;
+             if (Character.isLetter(cpf.charAt(i))) {
+                contemLetra = true; 
+            }
+        }
+        
+        if(contador != 11 || contemLetra) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -246,6 +379,7 @@ public class RegistroView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -254,11 +388,11 @@ public class RegistroView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPasswordField jPFSenha;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTFCpf;
     private javax.swing.JTextField jTFEmail;
-    private javax.swing.JTextField jTFEmail1;
-    private javax.swing.JTextField jTFEmail2;
+    private javax.swing.JTextField jTFNome;
     // End of variables declaration//GEN-END:variables
 }
