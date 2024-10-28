@@ -65,8 +65,8 @@ public class ProdutoDao {
         }
     }
     
-    public static void atualizarProduto(int id, String nome, String descricao, double preco_venda, double preco_custo, int quantidade) {
-        String sql = "UPDATE produtos SET nome = ?, descricao = ?, preco_venda = ?, preco_custo = ?, quantidade = ? WHERE id_produto = ?;";
+    public void atualizarProduto(int id, String nome, String descricao, double preco_venda, double preco_custo, int quantidade, int id_categoria, int id_fornecedor) {
+        String sql = "UPDATE produtos SET nome = ?, descricao = ?, preco_venda = ?, preco_custo = ?, quantidade = ?, id_categoria = ?, id_fornecedor = ? WHERE id_produto = ?;";
         
         con = new Conexao().obterConexao();
         
@@ -78,7 +78,9 @@ public class ProdutoDao {
             pstm.setDouble(3, preco_venda);
             pstm.setDouble(4, preco_custo);
             pstm.setInt(5, quantidade);
-            pstm.setInt(6, id);
+            pstm.setInt(6, id_categoria);
+            pstm.setInt(7, id_fornecedor);
+            pstm.setInt(8, id);
             
             int resultado = pstm.executeUpdate();
             

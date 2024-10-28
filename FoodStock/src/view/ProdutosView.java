@@ -8,11 +8,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import model.Produto;
+import view.components.CategoriaComboBox;
+import view.components.FornecedorComboBox;
 
 public class ProdutosView extends javax.swing.JFrame {
     ProdutoController produtoController = new ProdutoController();
     CategoriaController categoriaController = new CategoriaController();
     FornecedorController fornecedorController = new FornecedorController();
+    CategoriaComboBox categoriaCB = new CategoriaComboBox();
+    FornecedorComboBox fornecedorCB = new FornecedorComboBox();
 
     public ProdutosView() {
         initComponents();
@@ -44,6 +48,8 @@ public class ProdutosView extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jBtDeletar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jBtAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,10 +107,21 @@ public class ProdutosView extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/delete_icon.png"))); // NOI18N
 
+        jBtDeletar.setBackground(new java.awt.Color(253, 253, 253));
         jBtDeletar.setText("Deletar produto");
         jBtDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtDeletarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/edit_icon.png"))); // NOI18N
+
+        jBtAlterar.setBackground(new java.awt.Color(253, 253, 253));
+        jBtAlterar.setText("Alterar produto");
+        jBtAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtAlterarActionPerformed(evt);
             }
         });
 
@@ -122,7 +139,11 @@ public class ProdutosView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtDeletar)))
+                        .addComponent(jBtDeletar)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtAlterar)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -138,7 +159,11 @@ public class ProdutosView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtDeletar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jBtAlterar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBtDeletar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
@@ -163,6 +188,26 @@ public class ProdutosView extends javax.swing.JFrame {
         
         this.setVisible(false);
     }//GEN-LAST:event_jBtInserirProdutoActionPerformed
+
+    private void jBtAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAlterarActionPerformed
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada != -1) {
+           int id = Integer.parseInt(jTable1.getModel().getValueAt(linhaSelecionada, 0).toString()); 
+           String nome = (String) jTable1.getModel().getValueAt(linhaSelecionada, 1);
+           String descricao = (String) jTable1.getModel().getValueAt(linhaSelecionada, 2);
+           double precoVenda = Double.parseDouble(jTable1.getModel().getValueAt(linhaSelecionada, 3).toString());
+           double precoCusto = Double.parseDouble(jTable1.getModel().getValueAt(linhaSelecionada, 4).toString());
+           int quantidade = Integer.parseInt(jTable1.getModel().getValueAt(linhaSelecionada, 5).toString());
+           String categoria = (String) jTable1.getModel().getValueAt(linhaSelecionada, 6);
+           String fornecedor = (String) jTable1.getModel().getValueAt(linhaSelecionada, 7);
+           
+           AlterarProdutoView alterarProduto = new AlterarProdutoView(id, nome, descricao, precoVenda, precoCusto, quantidade, categoria, fornecedor);
+           alterarProduto.setVisible(true);
+           this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtAlterarActionPerformed
 
     private void jBtDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtDeletarActionPerformed
         int linhaSelecionada = jTable1.getSelectedRow();
@@ -218,10 +263,12 @@ public class ProdutosView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtAlterar;
     private javax.swing.JButton jBtDeletar;
     private javax.swing.JButton jBtInserirProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
