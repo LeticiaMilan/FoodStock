@@ -5,7 +5,7 @@ import dao.LoginDao;
 public class LoginController {
     LoginDao loginDao = new LoginDao();
     
-    public void fazerLogin(String email, String senha) {
-        loginDao.fazerLogin(email, senha);
+    public int fazerLogin(String email, String senha) {
+        return loginDao.fazerLogin(email, senha);
     }
 }

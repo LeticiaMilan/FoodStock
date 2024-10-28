@@ -9,8 +9,12 @@ public class LoginDao {
 
     private static Connection con;
 
-    public void fazerLogin(String email, String senha) {
-        String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?;";
+    public int fazerLogin(String email, String senha) {
+        if(email.isBlank() || senha.isBlank()) {
+            return 2;
+        }
+        
+        String sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?;";
 
         con = new Conexao().obterConexao();
 
@@ -21,11 +25,16 @@ public class LoginDao {
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 System.out.println("Login bem-sucedido!");
+                return 1;
             } else {
                 System.out.println("Usuário não encontrado ou senha incorreta.");
+                return 0;
             }
         } catch (Exception e) {
             System.out.println("Não foi possível fazer login. Erro: " + e);
         }
+        
+        return 1;
     }
+    
 }
