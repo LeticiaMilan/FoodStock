@@ -3,17 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/controller/CategoriaController.java</file>
             <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/view/components/FornecedorComboBox.java</file>
+            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/dao/EnderecoDao.java</file>
             <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/controller/FornecedorController.java</file>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/model/Produto.java</file>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/model/Categoria.java</file>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/view/components/CategoriaComboBox.java</file>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/view/InserirProdutoView.java</file>
+            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/view/InserirFornecedorView.java</file>
             <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/dao/FornecedorDao.java</file>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/dao/CategoriaDao.java</file>
+            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/dao/TelefoneDao.java</file>
+            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/controller/ProdutoController.java</file>
+            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/controller/TelefoneController.java</file>
             <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/dao/ProdutoDao.java</file>
-            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/model/Fornecedor.java</file>
+            <file>file:/C:/Users/mmart/Documents/projetos/FoodStock/FoodStock/src/model/Telefone.java</file>
         </group>
     </open-files>
 </project-private>

@@ -4,16 +4,41 @@ import controller.EnderecoController;
 import controller.FornecedorController;
 import controller.TelefoneController;
 import javax.swing.JOptionPane;
+import model.Endereco;
+import model.Telefone;
 
-public class InserirFornecedorView extends javax.swing.JFrame {
+public class VerFornecedorView extends javax.swing.JFrame {
     
     FornecedorController fornecedorController = new FornecedorController();
     TelefoneController telefoneController = new TelefoneController();
     EnderecoController enderecoController = new EnderecoController();
+    private int idFornecedor;
 
-    public InserirFornecedorView() {
+    public VerFornecedorView() {
         initComponents();
         
+    }
+    
+    public VerFornecedorView(int id, String nome, String cnpj, String email, int enderecoId, int telefoneId) {
+        initComponents();
+        
+        this.idFornecedor = id;
+        
+        jTFNome.setText(nome);
+        jTFCnpj.setText(cnpj);
+        jTFEmail.setText(email);
+        
+        Endereco endereco = enderecoController.buscarEnderecoPorId(enderecoId);
+        Telefone telefone = telefoneController.buscarTelefonePorId(telefoneId);
+        
+        jTFLogradouro.setText(endereco.getLogradouro());
+        jTFBairro.setText(endereco.getBairro());
+        jTFNumero.setText(endereco.getNumero());
+        jTFCep.setText(endereco.getCep());
+        jTFMunicipio.setText(endereco.getMunicipio());
+        jTFEstado.setText(endereco.getEstado());
+        jTFPais.setText(endereco.getPais());
+        jTFTelefone.setText(telefone.getNumero());
     }
 
     @SuppressWarnings("unchecked")
@@ -46,6 +71,7 @@ public class InserirFornecedorView extends javax.swing.JFrame {
         jTFPais = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jTFTelefone = new javax.swing.JTextField();
+        jBtInserir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inserir produto");
@@ -54,7 +80,7 @@ public class InserirFornecedorView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(31, 73, 90));
-        jLabel1.setText("INSERIR FORNECEDOR");
+        jLabel1.setText("FORNECEDOR");
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(31, 73, 90));
@@ -184,12 +210,22 @@ public class InserirFornecedorView extends javax.swing.JFrame {
             }
         });
 
+        jBtInserir.setBackground(new java.awt.Color(253, 253, 253));
+        jBtInserir.setText("Inserir fornecedor");
+        jBtInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtInserirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addComponent(jBtInserir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(205, 205, 205)
                 .addComponent(jBtVoltar)
@@ -232,9 +268,9 @@ public class InserirFornecedorView extends javax.swing.JFrame {
                                         .addComponent(jTFPais, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel7)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
+                        .addGap(224, 224, 224)
                         .addComponent(jLabel1)))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +331,9 @@ public class InserirFornecedorView extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBtVoltar)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jBtVoltar)
+                            .addComponent(jBtInserir))))
                 .addGap(8, 8, 8))
         );
 
@@ -357,9 +395,9 @@ public class InserirFornecedorView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFNomeActionPerformed
 
     private void jBtVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtVoltarActionPerformed
-        VerFornecedorView fornecedorView = new VerFornecedorView();
+        ProdutosView produtosView = new ProdutosView();
         this.setVisible(false);
-        fornecedorView.setVisible(true);
+        produtosView.setVisible(true);
     }//GEN-LAST:event_jBtVoltarActionPerformed
 
     private void jTFCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFCnpjActionPerformed
@@ -389,6 +427,13 @@ public class InserirFornecedorView extends javax.swing.JFrame {
     private void jTFTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFTelefoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFTelefoneActionPerformed
+
+    private void jBtInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtInserirActionPerformed
+        InserirFornecedorView inserirFornecedor = new InserirFornecedorView();
+        
+        this.setVisible(false);
+        inserirFornecedor.setVisible(true);
+    }//GEN-LAST:event_jBtInserirActionPerformed
 
     private void limparCampos() {
         jTFNome.setText("");
@@ -421,26 +466,29 @@ public class InserirFornecedorView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InserirFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InserirFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InserirFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InserirFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerFornecedorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InserirFornecedorView().setVisible(true);
+                new VerFornecedorView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtInserir;
     private javax.swing.JButton jBtVoltar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

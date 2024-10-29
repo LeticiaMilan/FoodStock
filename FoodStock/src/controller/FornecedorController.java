@@ -11,11 +11,15 @@ public class FornecedorController {
         return fornecedorDao.buscarFornecedores();
     }
     
-    public String buscarFornecedorPorId(int id) {
-        return fornecedorDao.buscarFornecedorPorId(id);
+    public String buscarNomeFornecedorPorId(int id) {
+        return fornecedorDao.buscarNomeFornecedorPorId(id);
     }
     
     public void inserirFornecedor(String nome, String cnpj, String email, int enderecoId, int telefoneId) {
         fornecedorDao.inserirFornecedor(nome, cnpj, email, enderecoId, telefoneId);
+    }
+    
+    public Fornecedor buscarFornecedorPorId(int id) {
+        return fornecedorDao.buscarFornecedorPorId(id);
     }
 }

@@ -38,7 +38,7 @@ public class FornecedorDao {
         return fornecedores;
     }
     
-    public String buscarFornecedorPorId(int id) {
+    public String buscarNomeFornecedorPorId(int id) {
         String sql = "SELECT nome FROM fornecedores where id_fornecedor = ?";
         String nome = null;
         
@@ -60,6 +60,36 @@ public class FornecedorDao {
         }
         
         return nome;
+    }
+    
+    public Fornecedor buscarFornecedorPorId(int id) {
+        String sql = "SELECT * FROM fornecedores where id_fornecedor = ?";
+        Fornecedor fornecedor = null;
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                String nome = rs.getString("nome");
+                String cnpj = rs.getString("cnpj");
+                String email = rs.getString("email");
+                int enderecoId = rs.getInt("id_endereco");
+                int telefoneId = rs.getInt("id_telefone");
+                
+                fornecedor = new Fornecedor(id, nome, cnpj, email, enderecoId, telefoneId);
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar fornecedor. Erro: " + e);
+        }
+        
+        return fornecedor;
     }
     
     public void inserirFornecedor(String nome, String cnpj, String email, int enderecoId, int telefoneId) {

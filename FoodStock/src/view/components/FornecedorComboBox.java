@@ -29,4 +29,5 @@ public class FornecedorComboBox {
         String nomeSelecionado = (String) comboBox.getSelectedItem();
         return fornecedorMap.get(nomeSelecionado);
     }
+   
 }

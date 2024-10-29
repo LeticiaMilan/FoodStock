@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import model.Fornecedor;
 import model.Produto;
 import view.components.CategoriaComboBox;
 import view.components.FornecedorComboBox;
@@ -25,15 +26,20 @@ public class ProdutosView extends javax.swing.JFrame {
         
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         
-        TableColumn colunaId = jTable1.getColumnModel().getColumn(0);
-        jTable1.getColumnModel().removeColumn(colunaId);
-        
         for (Produto produto: listaProdutos) {
             String nomeCategoria = categoriaController.buscarCategoriaPorId(produto.getCategoria());
-            String nomeFornecedor = fornecedorController.buscarFornecedorPorId(produto.getFornecedor());
-            Object [] obj = {produto.getId_produto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), produto.getPrecoCusto(), produto.getQuantidade(), nomeCategoria, nomeFornecedor};
+            String nomeFornecedor = fornecedorController.buscarNomeFornecedorPorId(produto.getFornecedor());
+            Object [] obj = {produto.getId_produto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), 
+                produto.getPrecoCusto(), produto.getQuantidade(), nomeCategoria, nomeFornecedor, produto.getFornecedor()};
             dtm.addRow(obj);
         }
+        
+        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(8).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -89,11 +95,11 @@ public class ProdutosView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Nome", "Descrição", "Preço de venda", "Preço de custo", "Quantidade", "Categoria", "Fornecedor"
+                "id", "Nome", "Descrição", "Preço de venda", "Preço de custo", "Quantidade", "Categoria", "Fornecedor", "id fornecedor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -106,6 +112,7 @@ public class ProdutosView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(8).setResizable(false);
         }
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/delete_icon.png"))); // NOI18N
@@ -247,7 +254,18 @@ public class ProdutosView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtDeletarActionPerformed
 
     private void jBtFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtFornecedorActionPerformed
-        
+        int linhaSelecionada = jTable1.getSelectedRow();
+        if (linhaSelecionada != -1) {
+            
+            int idFornecedor = (int) jTable1.getModel().getValueAt(linhaSelecionada, 8);
+            Fornecedor fornecedor = fornecedorController.buscarFornecedorPorId(idFornecedor);
+            
+            VerFornecedorView verFornecedor = new VerFornecedorView(fornecedor.getId_fornecedor(),  fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getEmail(), fornecedor.getEndereco(), fornecedor.getTelefone());
+            verFornecedor.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBtFornecedorActionPerformed
 
     private void atualizarTabela() {
