@@ -61,4 +61,33 @@ public class FornecedorDao {
         
         return nome;
     }
+    
+    public void inserirFornecedor(String nome, String cnpj, String email, int enderecoId, int telefoneId) {
+        String sql = "INSERT INTO fornecedores (nome, cnpj, email, id_endereco, id_telefone) VALUES (?, ?, ?, ?, ?);";
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            
+            pstm.setString(1, nome);
+            pstm.setString(2, cnpj);
+            pstm.setString(3, email);
+            pstm.setInt(4, enderecoId);
+            pstm.setInt(5, telefoneId);
+            
+            int resultado = pstm.executeUpdate();
+            
+            pstm.close();
+            con.close();
+            
+            if (resultado == 0) {
+                System.out.println("Nenhum fornecedor inserido.");
+            } else {
+                System.out.println("Fornecedor inserido com sucesso.");
+            }
+        } catch(Exception e) {
+            System.out.println("Erro ao inserir fornecedor. Erro: " + e);
+        }
+    }
 }

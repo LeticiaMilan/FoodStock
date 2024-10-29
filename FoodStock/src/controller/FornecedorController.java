@@ -14,4 +14,8 @@ public class FornecedorController {
     public String buscarFornecedorPorId(int id) {
         return fornecedorDao.buscarFornecedorPorId(id);
     }
+    
+    public void inserirFornecedor(String nome, String cnpj, String email, int enderecoId, int telefoneId) {
+        fornecedorDao.inserirFornecedor(nome, cnpj, email, enderecoId, telefoneId);
+    }
 }
