@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Movimentacao {
     private int idMovimentacao;
-    private TipoMovimentacao tipoMovimentacao;
+    private TipoMovimentacaoEnum tipoMovimentacao;
     private int quantidade;
     private LocalDate data;
     private Produto produto;
@@ -12,7 +12,7 @@ public class Movimentacao {
     private Fornecedor fornecedor;
     private Cliente cliente;
 
-    public Movimentacao(int idMovimentacao, TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
+    public Movimentacao(int idMovimentacao, TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
         this.idMovimentacao = idMovimentacao;
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
@@ -23,7 +23,7 @@ public class Movimentacao {
         this.cliente = cliente;
     }
 
-    public Movimentacao(TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
+    public Movimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.data = data;
@@ -33,7 +33,7 @@ public class Movimentacao {
         this.cliente = cliente;
     }
 
-    public Movimentacao(TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor) {
+    public Movimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor) {
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.data = data;
@@ -42,13 +42,17 @@ public class Movimentacao {
         this.fornecedor = fornecedor;
     }
 
-    public Movimentacao(TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Cliente cliente) {
+    public Movimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Cliente cliente) {
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
         this.data = data;
         this.produto = produto;
         this.usuario = usuario;
         this.cliente = cliente;
+    }
+    
+    public int getId() {
+        return tipoMovimentacao.getId();
     }
 
     public int getIdMovimentacao() {
@@ -59,11 +63,11 @@ public class Movimentacao {
         this.idMovimentacao = idMovimentacao;
     }
 
-    public TipoMovimentacao getTipoMovimentacao() {
+    public TipoMovimentacaoEnum getTipoMovimentacao() {
         return tipoMovimentacao;
     }
 
-    public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+    public void setTipoMovimentacao(TipoMovimentacaoEnum tipoMovimentacao) {
         this.tipoMovimentacao = tipoMovimentacao;
     }
 

@@ -29,5 +29,4 @@ public class TipoMovimentacao {
         this.tipo = tipo;
     }
     
-    
 }

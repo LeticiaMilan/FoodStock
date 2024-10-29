@@ -1,6 +1,9 @@
 package view;
 
+import controller.CategoriaController;
 import controller.ClienteController;
+import controller.FornecedorController;
+import controller.ProdutoController;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,35 +11,59 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import model.Cliente;
+import model.Fornecedor;
+import model.Produto;
+import view.components.CategoriaComboBox;
+import view.components.FornecedorComboBox;
 
-public class ClienteView extends javax.swing.JFrame {
+public class ProdutoView extends javax.swing.JFrame {
 
-    ClienteController clienteController = new ClienteController();
+    ProdutoController produtoController = new ProdutoController();
+    CategoriaController categoriaController = new CategoriaController();
+    FornecedorController fornecedorController = new FornecedorController();
+    CategoriaComboBox categoriaCB = new CategoriaComboBox();
+    FornecedorComboBox fornecedorCB = new FornecedorComboBox();
 
-    public ClienteView() {
-        initComponents();
+    public ProdutoView() {
+    initComponents();
 
-        //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        Color backgroundDashboard = new Color(241, 245, 246);
-        getContentPane().setBackground(backgroundDashboard);
+    Color backgroundDashboard = new Color(241, 245, 246);
+    getContentPane().setBackground(backgroundDashboard);
 
-        List<Cliente> listaClientes = clienteController.obterClientes();
-
-        String[] colunas = {"Id", "Nome", "CPF/CNPJ", "Email", "Telefone", "CEP", "Logradouro", "Bairro", "Número", "Município", "Estado", "País"};
-        DefaultTableModel dtm = new DefaultTableModel(null, colunas);
-        jTable.setModel(dtm);
-
-        TableColumn colunaId = jTable.getColumnModel().getColumn(0);
-        jTable.getColumnModel().removeColumn(colunaId);
-
-        for (Cliente cliente : listaClientes) {
-            Object[] obj = {cliente.getIdCliente(), cliente.getNome(), cliente.getCpfCnpj(), cliente.getEmail(), cliente.getTelefone().getNumero(), 
-                            cliente.getEndereco().getCep(), cliente.getEndereco().getLogradouro(), cliente.getEndereco().getBairro(), cliente.getEndereco().getNumero(),
-                            cliente.getEndereco().getMunicipio(), cliente.getEndereco().getEstado(), cliente.getEndereco().getPais()};
-            dtm.addRow(obj);
-        }
+    ArrayList<Produto> listaProdutos = produtoController.obterProdutos();
+    
+    // Definindo as colunas corretamente
+    String[] colunas = {
+        "ID", 
+        "Nome", 
+        "Descrição", 
+        "Preço de Venda", 
+        "Preço de Custo", 
+        "Quantidade", 
+        "Categoria", 
+        "Fornecedor", 
+        "ID Fornecedor"
+    };
+    DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+    jTable.setModel(dtm);
+    
+    for (Produto produto: listaProdutos) {
+        String nomeCategoria = categoriaController.buscarCategoriaPorId(produto.getCategoria());
+        String nomeFornecedor = fornecedorController.buscarNomeFornecedorPorId(produto.getFornecedor());
+        Object [] obj = {produto.getIdProduto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), 
+            produto.getPrecoCusto(), produto.getQuantidade(), nomeCategoria, nomeFornecedor, produto.getFornecedor()};
+        dtm.addRow(obj);
     }
+    
+    // Ocultando colunas
+    jTable.getColumnModel().getColumn(0).setMinWidth(0);
+    jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+    jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
 
+    jTable.getColumnModel().getColumn(8).setMinWidth(0);
+    jTable.getColumnModel().getColumn(8).setMaxWidth(0);
+    jTable.getColumnModel().getColumn(8).setPreferredWidth(0);
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,8 +79,6 @@ public class ClienteView extends javax.swing.JFrame {
         jPnLayout = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTFBuscar = new javax.swing.JTextField();
-        jCBEstado = new javax.swing.JComboBox<>();
-        jCBMunicipio = new javax.swing.JComboBox<>();
         jCBCompra = new javax.swing.JComboBox<>();
         jBtnAddNovoCliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -63,10 +88,9 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jBtnAlterar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jBtnCliente = new javax.swing.JButton();
+        jBtnFornecedor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
 
@@ -166,7 +190,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Clientes");
+        jLabel1.setText("Produtos");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jTFBuscar.setText(" Buscar");
@@ -177,18 +201,12 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
-        jCBEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estado" }));
-        jCBEstado.setFocusable(false);
-
-        jCBMunicipio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Municipio" }));
-        jCBMunicipio.setFocusable(false);
-
         jCBCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Compra", "Mais compraram", "Menos compraram" }));
         jCBCompra.setFocusable(false);
 
         jBtnAddNovoCliente.setBackground(new java.awt.Color(255, 209, 103));
         jBtnAddNovoCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jBtnAddNovoCliente.setText("Novo cliente");
+        jBtnAddNovoCliente.setText("Novo produto");
         jBtnAddNovoCliente.setBorder(null);
         jBtnAddNovoCliente.setBorderPainted(false);
         jBtnAddNovoCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +233,7 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/delete_icon.png"))); // NOI18N
 
         jBtnDeletar.setBackground(new java.awt.Color(253, 253, 253));
-        jBtnDeletar.setText("Deletar cliente");
+        jBtnDeletar.setText("Deletar produto");
         jBtnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnDeletarActionPerformed(evt);
@@ -225,7 +243,7 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/edit_icon.png"))); // NOI18N
 
         jBtnAlterar.setBackground(new java.awt.Color(253, 253, 253));
-        jBtnAlterar.setText("Alterar cliente");
+        jBtnAlterar.setText("Alterar produto");
         jBtnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnAlterarActionPerformed(evt);
@@ -234,11 +252,11 @@ public class ClienteView extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/search_icon.png"))); // NOI18N
 
-        jBtnCliente.setBackground(new java.awt.Color(253, 253, 253));
-        jBtnCliente.setText("Ver cliente");
-        jBtnCliente.addActionListener(new java.awt.event.ActionListener() {
+        jBtnFornecedor.setBackground(new java.awt.Color(253, 253, 253));
+        jBtnFornecedor.setText("Ver fornecedor");
+        jBtnFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnClienteActionPerformed(evt);
+                jBtnFornecedorActionPerformed(evt);
             }
         });
 
@@ -260,18 +278,14 @@ public class ClienteView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnCliente))
+                        .addComponent(jBtnFornecedor))
                     .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane1)
                         .addGroup(jPnLayoutLayout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(26, 26, 26)
                             .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(35, 35, 35)
-                            .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jCBMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
+                            .addGap(255, 255, 255)
                             .addComponent(jCBCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jBtnAddNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -284,15 +298,13 @@ public class ClienteView extends javax.swing.JFrame {
                 .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCBCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnAddNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBtnCliente)
+                    .addComponent(jBtnFornecedor)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -330,8 +342,8 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFBuscarActionPerformed
 
     private void jBtnAddNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddNovoClienteActionPerformed
-        CadastrarClienteView cadastrarCliente = new CadastrarClienteView();
-        cadastrarCliente.setVisible(true);
+        InserirProdutoView inserirProduto = new InserirProdutoView();
+        inserirProduto.setVisible(true);
     }//GEN-LAST:event_jBtnAddNovoClienteActionPerformed
 
     private void jBtnHomeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnHomeMenuActionPerformed
@@ -359,13 +371,13 @@ public class ClienteView extends javax.swing.JFrame {
     private void jBtnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDeletarActionPerformed
         int linhaSelecionada = jTable.getSelectedRow();
         if (linhaSelecionada != -1) {
-            int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo deletar o cliente?", "Confirmação", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo deletar o produto?", "Confirmação", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
             if (resposta == JOptionPane.OK_OPTION) {
                 int id = (int) jTable.getModel().getValueAt(linhaSelecionada, 0);
-                clienteController.deletarClientePorId(id);
-
-                JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                produtoController.deletarProdutoPorId(id);
+                
+                JOptionPane.showMessageDialog(null, "Produto deletado com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
                 atualizarTabela();
             }
         } else {
@@ -376,37 +388,46 @@ public class ClienteView extends javax.swing.JFrame {
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
         int linhaSelecionada = jTable.getSelectedRow();
         if (linhaSelecionada != -1) {
-            int id = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 0).toString());
-            String nome = (String) jTable.getModel().getValueAt(linhaSelecionada, 1);
-            String cpfCnpj = (String) jTable.getModel().getValueAt(linhaSelecionada, 2);
-            String email = (String) jTable.getModel().getValueAt(linhaSelecionada, 3);
-            String telefone = (String) jTable.getModel().getValueAt(linhaSelecionada, 4);
-            String cep = (String) jTable.getModel().getValueAt(linhaSelecionada, 5);
-            String logradouro = (String) jTable.getModel().getValueAt(linhaSelecionada, 6);
-            String bairro = (String) jTable.getModel().getValueAt(linhaSelecionada, 7);
-            String numero = (String) jTable.getModel().getValueAt(linhaSelecionada, 8);
-            String municipio = (String) jTable.getModel().getValueAt(linhaSelecionada, 9);
-            String estado = (String) jTable.getModel().getValueAt(linhaSelecionada, 10);
-            String pais = (String) jTable.getModel().getValueAt(linhaSelecionada, 11);
-
-            AlterarClienteView alterarCliente = new AlterarClienteView(id, nome, cpfCnpj, email, telefone, cep, logradouro, bairro, numero, municipio, estado, pais);
-            alterarCliente.setVisible(true);
+           int id = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 0).toString()); 
+           String nome = (String) jTable.getModel().getValueAt(linhaSelecionada, 1);
+           String descricao = (String) jTable.getModel().getValueAt(linhaSelecionada, 2);
+           double precoVenda = Double.parseDouble(jTable.getModel().getValueAt(linhaSelecionada, 3).toString());
+           double precoCusto = Double.parseDouble(jTable.getModel().getValueAt(linhaSelecionada, 4).toString());
+           int quantidade = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 5).toString());
+           String categoria = (String) jTable.getModel().getValueAt(linhaSelecionada, 6);
+           String fornecedor = (String) jTable.getModel().getValueAt(linhaSelecionada, 7);
+           
+           AlterarProdutoView alterarProduto = new AlterarProdutoView(id, nome, descricao, precoVenda, precoCusto, quantidade, categoria, fornecedor);
+           alterarProduto.setVisible(true);
+           this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
-    private void jBtnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnClienteActionPerformed
+    private void jBtnFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFornecedorActionPerformed
+        int linhaSelecionada = jTable.getSelectedRow();
+        if (linhaSelecionada != -1) {
+            
+            int idFornecedor = (int) jTable.getModel().getValueAt(linhaSelecionada, 8);
+            Fornecedor fornecedor = fornecedorController.buscarFornecedorPorId(idFornecedor);
+            
+            VerFornecedorView verFornecedor = new VerFornecedorView(fornecedor.getIdFornecedor(),  fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getEmail(), fornecedor.getEndereco(), fornecedor.getTelefone());
+            verFornecedor.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Alerta", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnFornecedorActionPerformed
 
-    }//GEN-LAST:event_jBtnClienteActionPerformed
-
-    void atualizarTabela() {
+    private void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
-
-        List<Cliente> listaClientes = clienteController.obterClientes();
-        for (Cliente cliente : listaClientes) {
-            Object[] rowData = {cliente.getIdCliente(), cliente.getNome(), cliente.getCpfCnpj(), cliente.getEmail(), cliente.getEndereco().getIdEndereco(), cliente.getTelefone().getIdTelefone()};
+        
+        ArrayList<Produto> listaProdutos = produtoController.obterProdutos();
+        for (Produto produto : listaProdutos) {
+            Object[] rowData = { produto.getIdProduto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), 
+                                 produto.getPrecoCusto(), produto.getQuantidade(), produto.getCategoria(), produto.getFornecedor() };
             model.addRow(rowData);
         }
     }
@@ -415,7 +436,7 @@ public class ClienteView extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteView().setVisible(true);
+                new ProdutoView().setVisible(true);
             }
         });
     }
@@ -423,15 +444,13 @@ public class ClienteView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAddNovoCliente;
     private javax.swing.JButton jBtnAlterar;
-    private javax.swing.JButton jBtnCliente;
     private javax.swing.JButton jBtnClientesMenu;
     private javax.swing.JButton jBtnDeletar;
     private javax.swing.JButton jBtnEstoqueMenu;
+    private javax.swing.JButton jBtnFornecedor;
     private javax.swing.JButton jBtnHomeMenu;
     private javax.swing.JButton jBtnProdutosMenu;
     private javax.swing.JComboBox<String> jCBCompra;
-    private javax.swing.JComboBox<String> jCBEstado;
-    private javax.swing.JComboBox<String> jCBMunicipio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

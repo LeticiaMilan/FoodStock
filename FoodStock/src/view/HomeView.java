@@ -108,6 +108,11 @@ public class HomeView extends javax.swing.JFrame {
         jBtnEstoqueMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon_mov_estoque.png"))); // NOI18N
         jBtnEstoqueMenu.setBorder(null);
         jBtnEstoqueMenu.setBorderPainted(false);
+        jBtnEstoqueMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEstoqueMenuActionPerformed(evt);
+            }
+        });
         jPnBotoesMenu.add(jBtnEstoqueMenu);
 
         javax.swing.GroupLayout jPnMenuLayout = new javax.swing.GroupLayout(jPnMenu);
@@ -393,9 +398,9 @@ public class HomeView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnAtalhoProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAtalhoProdutosActionPerformed
-        //ProdutoView pv = new ProdutoView();
-        //this.setVisible(false);
-        //pv.setVisible(true);
+        ProdutoView produtoView = new ProdutoView();
+        this.setVisible(false);
+        produtoView.setVisible(true);
     }//GEN-LAST:event_jBtnAtalhoProdutosActionPerformed
 
     private void jBtnAtalhoSaidaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAtalhoSaidaEstoqueActionPerformed
@@ -411,9 +416,9 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnClientesMenuActionPerformed
 
     private void jBtnProdutosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProdutosMenuActionPerformed
-        //ProdutoView pv = new ProdutoView();
-        //this.setVisible(false);
-        //pv.setVisible(true);
+        ProdutoView produtoView = new ProdutoView();
+        this.setVisible(false);
+        produtoView.setVisible(true);
         //InserirProdutoView inserirProduto = new InserirProdutoView();
         //inserirProduto.setVisible(true);
     }//GEN-LAST:event_jBtnProdutosMenuActionPerformed
@@ -423,6 +428,12 @@ public class HomeView extends javax.swing.JFrame {
         this.setVisible(false);
         entradaEstoque.setVisible(true);
     }//GEN-LAST:event_jBtnAtalhoEntradaEstoqueActionPerformed
+
+    private void jBtnEstoqueMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEstoqueMenuActionPerformed
+        MovimentacaoView movimentacaoEstoque = new MovimentacaoView();
+        this.setVisible(false);
+        movimentacaoEstoque.setVisible(true);
+    }//GEN-LAST:event_jBtnEstoqueMenuActionPerformed
 
     public static void main(String args[]) {
 

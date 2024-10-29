@@ -345,9 +345,9 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnClientesMenuActionPerformed
 
     private void jBtnProdutosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProdutosMenuActionPerformed
-        //ProdutoView produtoView = new ProdutoView();
-        //this.setVisible(false);
-        //produtoView.setVisible(true);
+        ProdutoView produtoView = new ProdutoView();
+        this.setVisible(false);
+        produtoView.setVisible(true);
     }//GEN-LAST:event_jBtnProdutosMenuActionPerformed
 
     private void jBtnEstoqueMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEstoqueMenuActionPerformed

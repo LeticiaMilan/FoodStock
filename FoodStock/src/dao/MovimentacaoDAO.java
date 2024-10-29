@@ -12,6 +12,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.TipoMovimentacaoEnum;
 
 public class MovimentacaoDAO {
 
@@ -20,7 +21,7 @@ public class MovimentacaoDAO {
 
         try (Connection con = new Conexao().obterConexao(); PreparedStatement pstm = con.prepareStatement(sql)) {
 
-            pstm.setInt(1, movimentacao.getTipoMovimentacao().getIdTipoMovimentacao());
+            pstm.setInt(1, movimentacao.getTipoMovimentacao().getId());
             pstm.setInt(2, movimentacao.getQuantidade());
             pstm.setDate(3, Date.valueOf(movimentacao.getData()));
             pstm.setInt(4, movimentacao.getProduto().getIdProduto());
@@ -44,13 +45,28 @@ public class MovimentacaoDAO {
             return false;
         }
     }
+    
+    // Método específico para adicionar entradas de estoque
+    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor, Usuario usuario) {
+        // Verifica se é uma entrada e se um fornecedor foi fornecido
+        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedor == null) {
+            System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
+            return false;
+        }
+
+        // Cria a movimentação de entrada
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, null);
+
+        // Chama diretamente o método inserirMovimentacao dentro da classe MovimentacaoDAO
+        return inserirMovimentacao(movimentacao);
+    }
 
     public boolean atualizarMovimentacao(Movimentacao movimentacao) {
         String sql = "UPDATE movimentacao_estoque SET id_tipo_movimentacao = ?, quantidade = ?, data = ?, id_produto = ?, id_usuario = ?, id_fornecedor = ?, id_cliente = ? WHERE id_movimentacao = ?";
 
         try (Connection con = new Conexao().obterConexao(); PreparedStatement pstm = con.prepareStatement(sql)) {
 
-            pstm.setInt(1, movimentacao.getTipoMovimentacao().getIdTipoMovimentacao());
+            pstm.setInt(1, movimentacao.getTipoMovimentacao().getId());
             pstm.setInt(2, movimentacao.getQuantidade());
             pstm.setDate(3, Date.valueOf(movimentacao.getData()));
             pstm.setInt(4, movimentacao.getProduto().getIdProduto());
@@ -77,7 +93,7 @@ public class MovimentacaoDAO {
         }
     }
 
-    public List<Movimentacao> obterMovimentacao() {
+    /*public List<Movimentacao> obterMovimentacao() {
         String sql = "SELECT * FROM movimentacao_estoque";
         List<Movimentacao> movimentacoes = new ArrayList<>();
 
@@ -102,7 +118,7 @@ public class MovimentacaoDAO {
         }
 
         return movimentacoes;
-    }
+    }*/
 
     public void deletarMovimentacaoPorId(int idMovimentacao) {
         String sql = "DELETE FROM movimentacao_estoque WHERE id_movimentacao = ?";

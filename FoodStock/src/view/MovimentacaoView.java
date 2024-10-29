@@ -1,6 +1,9 @@
 package view;
 
 import java.awt.Color;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Cliente;
 
 public class MovimentacaoView extends javax.swing.JFrame {
 
@@ -27,12 +30,11 @@ public class MovimentacaoView extends javax.swing.JFrame {
         jPnLayout = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTFBuscar = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jBtnAddNovaMovimentacao = new javax.swing.JButton();
+        jCBData = new javax.swing.JComboBox<>();
+        jBtnAddNovaEntradaEstoque = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        jBtnAddNovaSaidaEstoque = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -145,20 +147,20 @@ public class MovimentacaoView extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estado", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setFocusable(false);
+        jCBData.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data", "Mais recente", "Mais antigo" }));
+        jCBData.setFocusable(false);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Municipio", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setFocusable(false);
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bairro", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.setFocusable(false);
-
-        jBtnAddNovaMovimentacao.setBackground(new java.awt.Color(255, 209, 103));
-        jBtnAddNovaMovimentacao.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jBtnAddNovaMovimentacao.setText("Nova movimentação");
-        jBtnAddNovaMovimentacao.setBorder(null);
-        jBtnAddNovaMovimentacao.setBorderPainted(false);
+        jBtnAddNovaEntradaEstoque.setBackground(new java.awt.Color(51, 153, 0));
+        jBtnAddNovaEntradaEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jBtnAddNovaEntradaEstoque.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnAddNovaEntradaEstoque.setText("Nova entrada de estoque");
+        jBtnAddNovaEntradaEstoque.setBorder(null);
+        jBtnAddNovaEntradaEstoque.setBorderPainted(false);
+        jBtnAddNovaEntradaEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAddNovaEntradaEstoqueActionPerformed(evt);
+            }
+        });
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,6 +177,18 @@ public class MovimentacaoView extends javax.swing.JFrame {
         jTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable);
 
+        jBtnAddNovaSaidaEstoque.setBackground(new java.awt.Color(204, 51, 0));
+        jBtnAddNovaSaidaEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jBtnAddNovaSaidaEstoque.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnAddNovaSaidaEstoque.setText("Nova saída de estoque");
+        jBtnAddNovaSaidaEstoque.setBorder(null);
+        jBtnAddNovaSaidaEstoque.setBorderPainted(false);
+        jBtnAddNovaSaidaEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAddNovaSaidaEstoqueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPnLayoutLayout = new javax.swing.GroupLayout(jPnLayout);
         jPnLayout.setLayout(jPnLayoutLayout);
         jPnLayoutLayout.setHorizontalGroup(
@@ -182,19 +196,17 @@ public class MovimentacaoView extends javax.swing.JFrame {
             .addGroup(jPnLayoutLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1025, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPnLayoutLayout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCBData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jBtnAddNovaEntradaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBtnAddNovaMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnAddNovaSaidaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPnLayoutLayout.setVerticalGroup(
@@ -204,10 +216,9 @@ public class MovimentacaoView extends javax.swing.JFrame {
                 .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnAddNovaMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnAddNovaEntradaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnAddNovaSaidaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(67, Short.MAX_VALUE))
@@ -253,14 +264,26 @@ public class MovimentacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnClientesMenuActionPerformed
 
     private void jBtnProdutosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProdutosMenuActionPerformed
-        //ProdutoView pv = new ProdutoView();
-        //this.setVisible(false);
-        //pv.setVisible(true);
+        ProdutoView produtoView = new ProdutoView();
+        this.setVisible(false);
+        produtoView.setVisible(true);
     }//GEN-LAST:event_jBtnProdutosMenuActionPerformed
 
     private void jBtnEstoqueMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEstoqueMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnEstoqueMenuActionPerformed
+
+    private void jBtnAddNovaEntradaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddNovaEntradaEstoqueActionPerformed
+        EntradaEstoqueView entradaEstoque = new EntradaEstoqueView();
+        this.setVisible(false);
+        entradaEstoque.setVisible(true);
+    }//GEN-LAST:event_jBtnAddNovaEntradaEstoqueActionPerformed
+
+    private void jBtnAddNovaSaidaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddNovaSaidaEstoqueActionPerformed
+        SaidaEstoqueView saidaEstoque = new SaidaEstoqueView();
+        this.setVisible(false);
+        saidaEstoque.setVisible(true);
+    }//GEN-LAST:event_jBtnAddNovaSaidaEstoqueActionPerformed
 
     public static void main(String args[]) {
 
@@ -270,16 +293,26 @@ public class MovimentacaoView extends javax.swing.JFrame {
             }
         });
     }
+    
+    /*void atualizarTabela() {
+        DefaultTableModel model = (DefaultTableModel) jTable.getModel();
+        model.setRowCount(0);
+
+        List<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao();
+        for (Movimentacao movimentacao : listaMovimentacao) {
+            Object[] rowData = {cliente.getIdCliente(), cliente.getNome(), cliente.getCpfCnpj(), cliente.getEmail(), cliente.getEndereco().getIdEndereco(), cliente.getTelefone().getIdTelefone()};
+            model.addRow(rowData);
+        }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnAddNovaMovimentacao;
+    private javax.swing.JButton jBtnAddNovaEntradaEstoque;
+    private javax.swing.JButton jBtnAddNovaSaidaEstoque;
     private javax.swing.JButton jBtnClientesMenu;
     private javax.swing.JButton jBtnEstoqueMenu;
     private javax.swing.JButton jBtnHomeMenu;
     private javax.swing.JButton jBtnProdutosMenu;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jCBData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLbImagem;
     private javax.swing.JPanel jPnBotoesMenu;
