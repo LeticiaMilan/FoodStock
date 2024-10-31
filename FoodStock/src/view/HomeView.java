@@ -2,8 +2,11 @@ package view;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import model.Usuario;
 
 public class HomeView extends javax.swing.JFrame {
+    
+    Usuario usuarioSessao;
 
     public HomeView() {
         initComponents();
@@ -13,10 +16,20 @@ public class HomeView extends javax.swing.JFrame {
         getContentPane().setBackground(backgroundDashboard);
     }
     
+    public HomeView(Usuario usuarioSessao) {
+        initComponents();
+        this.usuarioSessao = usuarioSessao;
+
+        //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        Color backgroundDashboard = new Color(241, 245, 246);
+        getContentPane().setBackground(backgroundDashboard);
+    }
+
+    
     public void setUsuarioNome(String nomeUsuario) {
         jLblNomeUsuario.setText(nomeUsuario);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -492,7 +505,7 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnAtalhoEntradaEstoqueActionPerformed
 
     private void jBtnEstoqueMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEstoqueMenuActionPerformed
-        MovimentacaoView movimentacaoEstoque = new MovimentacaoView();
+        MovimentacaoView movimentacaoEstoque = new MovimentacaoView(this.usuarioSessao);
         this.setVisible(false);
         movimentacaoEstoque.setVisible(true);
     }//GEN-LAST:event_jBtnEstoqueMenuActionPerformed

@@ -16,6 +16,13 @@ public class Usuario {
         this.tipo = tipo;
         this.senha = senha;
     }
+    
+    //construtor para uso na sessao
+    public Usuario(int idUsuario, String nome, String email) { 
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+    }
 
     public int getIdUsuario() {
         return idUsuario;
@@ -63,6 +70,11 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "idUsuario=" + idUsuario + ", nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", tipo=" + tipo + ", senha=" + senha + '}';
     }
     
 }

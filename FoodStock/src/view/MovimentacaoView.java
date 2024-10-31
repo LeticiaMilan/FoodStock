@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Movimentacao;
+import model.Usuario;
 
 public class MovimentacaoView extends javax.swing.JFrame {
 
@@ -18,9 +19,61 @@ public class MovimentacaoView extends javax.swing.JFrame {
     FornecedorController fornecedorController = new FornecedorController();
     ClienteController clienteController = new ClienteController();
     UsuarioController usuarioController = new UsuarioController();
-
+    
+    Usuario usuarioSessao;
     public MovimentacaoView() {
         initComponents();
+
+        //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        Color backgroundDashboard = new Color(241, 245, 246);
+        getContentPane().setBackground(backgroundDashboard);
+
+        ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
+
+        String[] colunas = {
+            "ID",
+            "Tipo Movimentação",
+            "Quantidade",
+            "Data",
+            "Produto",
+            "Usuario",
+            "Fornecedor",
+            "Cliente"
+        };
+        DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+        jTable.setModel(dtm);
+
+        for (Movimentacao movimentacao : listaMovimentacao) {
+            // Obter IDs de forma segura
+            int idUsuario = (movimentacao.getUsuario() != null) ? movimentacao.getUsuario().getIdUsuario() : -1;
+            int idCliente = (movimentacao.getCliente() != null) ? movimentacao.getCliente().getIdCliente() : -1;
+            int idFornecedor = (movimentacao.getFornecedor() != null) ? movimentacao.getFornecedor().getIdFornecedor() : -1;
+            int idProduto = (movimentacao.getProduto() != null) ? movimentacao.getProduto().getIdProduto() : -1;
+
+            // Obter nomes, considerando que podem não existir
+            String nomeUsuario = (idUsuario != -1) ? usuarioController.buscarNomeUsuarioPorId(idUsuario) : "Não disponível";
+            String nomeCliente = (idCliente != -1) ? clienteController.buscarNomeClientePorId(idCliente) : "Não disponível";
+            String nomeFornecedor = (idFornecedor != -1) ? fornecedorController.buscarNomeFornecedorPorId(idFornecedor) : "Não disponível";
+            String nomeProduto = (idProduto != -1) ? produtoController.buscarNomeProdutoPorId(idProduto) : "Não disponível";
+
+            // Adicionar a linha à tabela
+            Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
+                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+            dtm.addRow(obj);
+        }
+
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTable.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(0);
+    }
+    
+    public MovimentacaoView(Usuario usuarioSessao) {
+        initComponents();
+        this.usuarioSessao = usuarioSessao;
 
         //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         Color backgroundDashboard = new Color(241, 245, 246);
@@ -328,7 +381,7 @@ public class MovimentacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnEstoqueMenuActionPerformed
 
     private void jBtnAddNovaEntradaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddNovaEntradaEstoqueActionPerformed
-        EntradaEstoqueView entradaEstoque = new EntradaEstoqueView();
+        EntradaEstoqueView entradaEstoque = new EntradaEstoqueView(usuarioSessao);
         this.setVisible(false);
         entradaEstoque.setVisible(true);
     }//GEN-LAST:event_jBtnAddNovaEntradaEstoqueActionPerformed
