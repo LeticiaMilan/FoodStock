@@ -22,6 +22,8 @@ public class MovimentacaoController {
 
     public MovimentacaoController() {
         movimentacaoDAO = new MovimentacaoDAO();
+        fornecedorDAO = new FornecedorDAO();
+        produtoDAO = new ProdutoDAO();
     }
 
     public boolean adicionarMovimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
@@ -99,11 +101,9 @@ public class MovimentacaoController {
             return false;
         }
 
-        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA) {
-            if (fornecedorId <= 0) { 
-                System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
-                return false;
-            }
+        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedorId <= 0) {
+            System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
+            return false;
         }
 
         Fornecedor fornecedor = fornecedorDAO.buscarFornecedorPorId(fornecedorId);
@@ -113,7 +113,6 @@ public class MovimentacaoController {
         }
 
         Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
-
         return movimentacaoDAO.inserirMovimentacao(movimentacao);
     }
 }

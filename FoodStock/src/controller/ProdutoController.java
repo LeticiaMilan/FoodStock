@@ -8,7 +8,7 @@ public class ProdutoController {
 
     private ProdutoDAO produtoDAO = new ProdutoDAO();
     
-     public ProdutoController() {
+    public ProdutoController() {
         this.produtoDAO = new ProdutoDAO();
     }
 
