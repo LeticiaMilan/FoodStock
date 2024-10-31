@@ -25,45 +25,44 @@ public class ProdutoView extends javax.swing.JFrame {
     FornecedorComboBox fornecedorCB = new FornecedorComboBox();
 
     public ProdutoView() {
-    initComponents();
+        initComponents();
 
-    Color backgroundDashboard = new Color(241, 245, 246);
-    getContentPane().setBackground(backgroundDashboard);
+        Color backgroundDashboard = new Color(241, 245, 246);
+        getContentPane().setBackground(backgroundDashboard);
 
-    ArrayList<Produto> listaProdutos = produtoController.obterProdutos();
-    
-    // Definindo as colunas corretamente
-    String[] colunas = {
-        "ID", 
-        "Nome", 
-        "Descrição", 
-        "Preço de Venda", 
-        "Preço de Custo", 
-        "Quantidade", 
-        "Categoria", 
-        "Fornecedor", 
-        "ID Fornecedor"
-    };
-    DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
-    jTable.setModel(dtm);
-    
-    for (Produto produto: listaProdutos) {
-        String nomeCategoria = categoriaController.buscarCategoriaPorId(produto.getCategoria());
-        String nomeFornecedor = fornecedorController.buscarNomeFornecedorPorId(produto.getFornecedor());
-        Object [] obj = {produto.getIdProduto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), 
-            produto.getPrecoCusto(), produto.getQuantidade(), nomeCategoria, nomeFornecedor, produto.getFornecedor()};
-        dtm.addRow(obj);
+        ArrayList<Produto> listaProdutos = produtoController.obterProdutos();
+
+        String[] colunas = {
+            "ID",
+            "Nome",
+            "Descrição",
+            "Preço de Venda",
+            "Preço de Custo",
+            "Quantidade",
+            "Categoria",
+            "Fornecedor",
+            "ID Fornecedor"
+        };
+        DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+        jTable.setModel(dtm);
+
+        for (Produto produto : listaProdutos) {
+            String nomeCategoria = categoriaController.buscarCategoriaPorId(produto.getCategoria());
+            String nomeFornecedor = fornecedorController.buscarNomeFornecedorPorId(produto.getFornecedor());
+            Object[] obj = {produto.getIdProduto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(),
+                produto.getPrecoCusto(), produto.getQuantidade(), nomeCategoria, nomeFornecedor, produto.getFornecedor()};
+            dtm.addRow(obj);
+        }
+
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTable.getColumnModel().getColumn(8).setMinWidth(0);
+        jTable.getColumnModel().getColumn(8).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(8).setPreferredWidth(0);
     }
-    
-    // Ocultando colunas
-    jTable.getColumnModel().getColumn(0).setMinWidth(0);
-    jTable.getColumnModel().getColumn(0).setMaxWidth(0);
-    jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
 
-    jTable.getColumnModel().getColumn(8).setMinWidth(0);
-    jTable.getColumnModel().getColumn(8).setMaxWidth(0);
-    jTable.getColumnModel().getColumn(8).setPreferredWidth(0);
-}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -201,7 +200,7 @@ public class ProdutoView extends javax.swing.JFrame {
             }
         });
 
-        jCBCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Compra", "Mais compraram", "Menos compraram" }));
+        jCBCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Preço", "Menor preço", "Maior preço" }));
         jCBCompra.setFocusable(false);
 
         jBtnAddNovoCliente.setBackground(new java.awt.Color(255, 209, 103));
@@ -285,8 +284,8 @@ public class ProdutoView extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(26, 26, 26)
                             .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(255, 255, 255)
-                            .addComponent(jCBCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(220, 220, 220)
+                            .addComponent(jCBCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jBtnAddNovoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(37, Short.MAX_VALUE))
@@ -353,7 +352,9 @@ public class ProdutoView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnHomeMenuActionPerformed
 
     private void jBtnClientesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnClientesMenuActionPerformed
-
+        ClienteView clienteView = new ClienteView();
+        this.setVisible(false);
+        clienteView.setVisible(true);
     }//GEN-LAST:event_jBtnClientesMenuActionPerformed
 
     private void jBtnProdutosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProdutosMenuActionPerformed
@@ -372,11 +373,11 @@ public class ProdutoView extends javax.swing.JFrame {
         int linhaSelecionada = jTable.getSelectedRow();
         if (linhaSelecionada != -1) {
             int resposta = JOptionPane.showConfirmDialog(null, "Deseja mesmo deletar o produto?", "Confirmação", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            
+
             if (resposta == JOptionPane.OK_OPTION) {
                 int id = (int) jTable.getModel().getValueAt(linhaSelecionada, 0);
                 produtoController.deletarProdutoPorId(id);
-                
+
                 JOptionPane.showMessageDialog(null, "Produto deletado com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
                 atualizarTabela();
             }
@@ -388,18 +389,18 @@ public class ProdutoView extends javax.swing.JFrame {
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
         int linhaSelecionada = jTable.getSelectedRow();
         if (linhaSelecionada != -1) {
-           int id = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 0).toString()); 
-           String nome = (String) jTable.getModel().getValueAt(linhaSelecionada, 1);
-           String descricao = (String) jTable.getModel().getValueAt(linhaSelecionada, 2);
-           double precoVenda = Double.parseDouble(jTable.getModel().getValueAt(linhaSelecionada, 3).toString());
-           double precoCusto = Double.parseDouble(jTable.getModel().getValueAt(linhaSelecionada, 4).toString());
-           int quantidade = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 5).toString());
-           String categoria = (String) jTable.getModel().getValueAt(linhaSelecionada, 6);
-           String fornecedor = (String) jTable.getModel().getValueAt(linhaSelecionada, 7);
-           
-           AlterarProdutoView alterarProduto = new AlterarProdutoView(id, nome, descricao, precoVenda, precoCusto, quantidade, categoria, fornecedor);
-           alterarProduto.setVisible(true);
-           this.setVisible(false);
+            int id = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 0).toString());
+            String nome = (String) jTable.getModel().getValueAt(linhaSelecionada, 1);
+            String descricao = (String) jTable.getModel().getValueAt(linhaSelecionada, 2);
+            double precoVenda = Double.parseDouble(jTable.getModel().getValueAt(linhaSelecionada, 3).toString());
+            double precoCusto = Double.parseDouble(jTable.getModel().getValueAt(linhaSelecionada, 4).toString());
+            int quantidade = Integer.parseInt(jTable.getModel().getValueAt(linhaSelecionada, 5).toString());
+            String categoria = (String) jTable.getModel().getValueAt(linhaSelecionada, 6);
+            String fornecedor = (String) jTable.getModel().getValueAt(linhaSelecionada, 7);
+
+            AlterarProdutoView alterarProduto = new AlterarProdutoView(id, nome, descricao, precoVenda, precoCusto, quantidade, categoria, fornecedor);
+            alterarProduto.setVisible(true);
+            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
@@ -408,11 +409,11 @@ public class ProdutoView extends javax.swing.JFrame {
     private void jBtnFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFornecedorActionPerformed
         int linhaSelecionada = jTable.getSelectedRow();
         if (linhaSelecionada != -1) {
-            
+
             int idFornecedor = (int) jTable.getModel().getValueAt(linhaSelecionada, 8);
             Fornecedor fornecedor = fornecedorController.buscarFornecedorPorId(idFornecedor);
-            
-            VerFornecedorView verFornecedor = new VerFornecedorView(fornecedor.getIdFornecedor(),  fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getEmail(), fornecedor.getEndereco(), fornecedor.getTelefone());
+
+            VerFornecedorView verFornecedor = new VerFornecedorView(fornecedor.getIdFornecedor(), fornecedor.getNome(), fornecedor.getCnpj(), fornecedor.getEmail(), fornecedor.getEndereco(), fornecedor.getTelefone());
             verFornecedor.setVisible(true);
             this.setVisible(false);
         } else {
@@ -423,11 +424,11 @@ public class ProdutoView extends javax.swing.JFrame {
     private void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
-        
+
         ArrayList<Produto> listaProdutos = produtoController.obterProdutos();
         for (Produto produto : listaProdutos) {
-            Object[] rowData = { produto.getIdProduto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(), 
-                                 produto.getPrecoCusto(), produto.getQuantidade(), produto.getCategoria(), produto.getFornecedor() };
+            Object[] rowData = {produto.getIdProduto(), produto.getNome(), produto.getDescricao(), produto.getPrecoVenda(),
+                produto.getPrecoCusto(), produto.getQuantidade(), produto.getCategoria(), produto.getFornecedor()};
             model.addRow(rowData);
         }
     }

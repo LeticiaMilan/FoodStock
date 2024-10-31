@@ -127,4 +127,90 @@ public class ProdutoDAO {
         
         return listaProdutos;
     }
+    
+    public ArrayList<Produto> buscarProdutos() {
+        ArrayList<Produto> produtos = new ArrayList<>();
+        String sql = "SELECT * FROM produtos";
+
+        try {
+            con = new Conexao().obterConexao();
+            PreparedStatement pstm = con.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id_produto");
+                String nome = rs.getString("nome");
+                String descricao = rs.getString("descricao");
+                double preco_venda = rs.getDouble("preco_venda");
+                double preco_custo = rs.getDouble("preco_custo");
+                int quantidade = rs.getInt("quantidade");
+                int categoria = rs.getInt("id_categoria");
+                int fornecedor = rs.getInt("id_fornecedor");
+                
+                produto = new Produto(id, nome, descricao, preco_venda, preco_custo, quantidade, categoria, fornecedor);
+                produtos.add(produto);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar fornecedores: " + e);
+        }
+
+        return produtos;
+    }
+    
+    public String buscarNomeProdutoPorId(int id) {
+        String sql = "SELECT nome FROM produtos where id_produto = ?";
+        String nome = null;
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                nome = rs.getString("nome");
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar produto. Erro: " + e);
+        }
+        
+        return nome;
+    }
+    
+    public Produto buscarProdutoPorId(int id) {
+        String sql = "SELECT * FROM produtos where id_produto = ?";
+        Produto produto = null;
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                String nome = rs.getString("nome");
+                String descricao = rs.getString("descricao");
+                double preco_venda = rs.getDouble("preco_venda");
+                double preco_custo = rs.getDouble("preco_custo");
+                int quantidade = rs.getInt("quantidade");
+                int categoria = rs.getInt("id_categoria");
+                int fornecedor = rs.getInt("id_fornecedor");
+                
+                produto = new Produto(id, nome, descricao, preco_venda, preco_custo, quantidade, categoria, fornecedor);
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar produto. Erro: " + e);
+        }
+        
+        return produto;
+    }
 }

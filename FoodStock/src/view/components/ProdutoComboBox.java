@@ -1,32 +1,32 @@
 package view.components;
 
-import controller.CategoriaController;
+import controller.ProdutoController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComboBox;
-import model.Categoria;
+import model.Produto;
 
-public class CategoriaComboBox {
-    private Map<String, Integer> categoriaMap = new HashMap<>();
-    
-    public void carregarCategorias(JComboBox<String> comboBox) {
-        CategoriaController categoriaController = new CategoriaController();
-        ArrayList<Categoria> categorias = categoriaController.buscarCategorias();
+public class ProdutoComboBox {
+
+    private Map<String, Integer> produtoMap = new HashMap<>();
+
+    public void carregarProdutos(JComboBox<Produto> comboBox) {
+        ProdutoController produtoController = new ProdutoController();
+        ArrayList<Produto> produtos = produtoController.buscarProdutos();
 
         comboBox.removeAllItems();
-        categoriaMap.clear();
 
-        for (Categoria categoria : categorias) {
-            String nome = categoria.getNome();
-            int id = categoria.getIdCategoria();
-            comboBox.addItem(nome);
-            categoriaMap.put(nome, id);
+        for (Produto produto : produtos) {
+            comboBox.addItem(produto); 
         }
     }
-    
-    public int getCategoriaId(JComboBox<String> comboBox) {
-        String nomeSelecionado = (String) comboBox.getSelectedItem();
-        return categoriaMap.get(nomeSelecionado);
+
+    public int getProdutoId(JComboBox<Produto> comboBox) {
+        Produto produtoSelecionado = (Produto) comboBox.getSelectedItem();
+        if (produtoSelecionado != null) {
+            return produtoSelecionado.getIdProduto(); 
+        }
+        return -1; 
     }
 }

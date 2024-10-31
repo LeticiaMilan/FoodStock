@@ -213,6 +213,94 @@ public class ClienteDAO {
 
         return endereco; 
     }
+    
+    public ArrayList<Cliente> buscarClientes() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM clientes";
+
+        try {
+            con = new Conexao().obterConexao();
+            PreparedStatement pstm = con.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                String nome = rs.getString("nome");  
+                String cpfCnpj = rs.getString("cpf_cnpj");  
+                String email = rs.getString("email");  
+
+                int idTelefone = rs.getInt("id_telefone");  
+                int idEndereco = rs.getInt("id_endereco"); 
+                
+                Telefone telefone = buscarTelefonePorId(idTelefone);
+                Endereco endereco = buscarEnderecoPorId(idEndereco);
+                
+                Cliente cliente = new Cliente(nome, cpfCnpj, email, endereco, telefone);
+                clientes.add(cliente);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar fornecedores: " + e);
+        }
+
+        return clientes;
+    }
+    
+    public Cliente buscarClientePorId(int id) {
+        String sql = "SELECT * FROM clientes WHERE id_cliente = ?";
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                String nome = rs.getString("nome");  
+                String cpfCnpj = rs.getString("cpf_cnpj");  
+                String email = rs.getString("email");  
+
+                int idTelefone = rs.getInt("id_telefone");  
+                int idEndereco = rs.getInt("id_endereco"); 
+                
+                Telefone telefone = buscarTelefonePorId(idTelefone);
+                Endereco endereco = buscarEnderecoPorId(idEndereco);
+                
+                 Cliente cliente = new Cliente(id, nome, cpfCnpj, email, endereco, telefone);
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar fornecedor. Erro: " + e);
+        }
+        
+        return cliente;
+    }
+    
+    public String buscarNomeClientePorId(int id) {
+        String sql = "SELECT nome FROM clientes where id_cliente = ?";
+        String nome = null;
+        
+        con = new Conexao().obterConexao();
+        
+        try {
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                nome = rs.getString("nome");
+            }
+            
+            pstm.close();
+            con.close();
+        } catch(Exception e) {
+            System.out.println("Erro ao buscar cliente. Erro: " + e);
+        }
+        
+        return nome;
+    }
 
     public boolean atualizarCliente(int idCliente, String nome, String cpfCnpj, String email,
                                     String numeroTelefone, String logradouro, String bairro,
@@ -222,14 +310,12 @@ public class ClienteDAO {
         try {
             con.setAutoCommit(false); 
 
-            // obter o CPF/CNPJ atual
             String cpfCnpjAtual = obterCpfCnpjPorId(idCliente);
             if (cpfCnpjAtual == null) {
                 System.out.println("Erro: Cliente não encontrado.");
                 return false;
             }
 
-            // comparar o CPF/CNPJ do JTF com o valor do banco
             if (cpfCnpj.equals(cpfCnpjAtual)) {
                 System.out.println("O CPF/CNPJ no JTextField é igual ao CPF/CNPJ no banco de dados, não é necessário atualizar este campo.");
             } else {
@@ -237,7 +323,6 @@ public class ClienteDAO {
                 return false;
             }
 
-            // atualizar telefone e endereco
             boolean telefoneAtualizado = atualizarTelefone(idCliente, numeroTelefone);
             if (!telefoneAtualizado) {
                 con.rollback();
@@ -251,8 +336,7 @@ public class ClienteDAO {
                 System.out.println("Erro ao atualizar endereço.");
                 return false;
             }
-
-            // atualizar cliente - ignora o campo CPF/CNPJ se nao houver alteracao
+            
             String sqlCliente;
             if (cpfCnpj.equals(cpfCnpjAtual)) {
                 sqlCliente = "UPDATE clientes SET nome = ?, email = ? WHERE id_cliente = ?;";

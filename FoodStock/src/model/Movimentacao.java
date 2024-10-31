@@ -12,6 +12,9 @@ public class Movimentacao {
     private Fornecedor fornecedor;
     private Cliente cliente;
 
+    public Movimentacao() {
+        
+    }
     public Movimentacao(int idMovimentacao, TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
         this.idMovimentacao = idMovimentacao;
         this.tipoMovimentacao = tipoMovimentacao;
@@ -119,5 +122,8 @@ public class Movimentacao {
         this.cliente = cliente;
     }
     
+    public boolean isEntrada() {
+        return TipoMovimentacaoEnum.ENTRADA.equals(tipoMovimentacao);
+    }
     
 }

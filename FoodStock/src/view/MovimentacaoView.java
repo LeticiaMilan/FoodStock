@@ -1,18 +1,72 @@
 package view;
 
+import controller.ClienteController;
+import controller.FornecedorController;
+import controller.MovimentacaoController;
+import controller.ProdutoController;
+import controller.UsuarioController;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import model.Cliente;
+import model.Movimentacao;
 
 public class MovimentacaoView extends javax.swing.JFrame {
 
+    MovimentacaoController movimentacaoController = new MovimentacaoController();
+    ProdutoController produtoController = new ProdutoController();
+    FornecedorController fornecedorController = new FornecedorController();
+    ClienteController clienteController = new ClienteController();
+    UsuarioController usuarioController = new UsuarioController();
+
     public MovimentacaoView() {
         initComponents();
-        
+
         //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        Color backgroundDashboard = new Color(241,245,246);
+        Color backgroundDashboard = new Color(241, 245, 246);
         getContentPane().setBackground(backgroundDashboard);
+
+        ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
+
+        String[] colunas = {
+            "ID",
+            "Tipo Movimentação",
+            "Quantidade",
+            "Data",
+            "Produto",
+            "Usuario",
+            "Fornecedor",
+            "Cliente"
+        };
+        DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+        jTable.setModel(dtm);
+
+        for (Movimentacao movimentacao : listaMovimentacao) {
+            // Obter IDs de forma segura
+            int idUsuario = (movimentacao.getUsuario() != null) ? movimentacao.getUsuario().getIdUsuario() : -1;
+            int idCliente = (movimentacao.getCliente() != null) ? movimentacao.getCliente().getIdCliente() : -1;
+            int idFornecedor = (movimentacao.getFornecedor() != null) ? movimentacao.getFornecedor().getIdFornecedor() : -1;
+            int idProduto = (movimentacao.getProduto() != null) ? movimentacao.getProduto().getIdProduto() : -1;
+
+            // Obter nomes, considerando que podem não existir
+            String nomeUsuario = (idUsuario != -1) ? usuarioController.buscarNomeUsuarioPorId(idUsuario) : "Não disponível";
+            String nomeCliente = (idCliente != -1) ? clienteController.buscarNomeClientePorId(idCliente) : "Não disponível";
+            String nomeFornecedor = (idFornecedor != -1) ? fornecedorController.buscarNomeFornecedorPorId(idFornecedor) : "Não disponível";
+            String nomeProduto = (idProduto != -1) ? produtoController.buscarNomeProdutoPorId(idProduto) : "Não disponível";
+
+            // Adicionar a linha à tabela
+            Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
+                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+            dtm.addRow(obj);
+        }
+
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTable.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -293,17 +347,18 @@ public class MovimentacaoView extends javax.swing.JFrame {
             }
         });
     }
-    
-    /*void atualizarTabela() {
+
+    private void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);
 
-        List<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao();
+        ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
         for (Movimentacao movimentacao : listaMovimentacao) {
-            Object[] rowData = {cliente.getIdCliente(), cliente.getNome(), cliente.getCpfCnpj(), cliente.getEmail(), cliente.getEndereco().getIdEndereco(), cliente.getTelefone().getIdTelefone()};
+            Object[] rowData = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
+                movimentacao.getProduto(), movimentacao.getUsuario(), movimentacao.getFornecedor(), movimentacao.getCliente()};
             model.addRow(rowData);
         }
-    }*/
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAddNovaEntradaEstoque;

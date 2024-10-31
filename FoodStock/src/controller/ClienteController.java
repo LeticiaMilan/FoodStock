@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ClienteDAO;
+import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
 
@@ -50,5 +51,17 @@ public class ClienteController {
     
     public void deletarClientePorId(int idCliente) {
         clienteDAO.deletarClientePorId(idCliente);
+    }
+    
+    public ArrayList<Cliente> buscarClientes() {
+        return clienteDAO.buscarClientes();
+    }
+    
+    public Cliente buscarClientePorId(int id) {
+        return clienteDAO.buscarClientePorId(id);
+    }
+    
+    public String buscarNomeClientePorId(int id) {
+        return clienteDAO.buscarNomeClientePorId(id);
     }
 }

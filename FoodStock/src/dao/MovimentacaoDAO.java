@@ -1,6 +1,10 @@
 package dao;
 
 import connection.Conexao;
+import controller.ClienteController;
+import controller.FornecedorController;
+import controller.ProdutoController;
+import controller.UsuarioController;
 import model.Movimentacao;
 import model.Produto;
 import model.TipoMovimentacao;
@@ -45,20 +49,44 @@ public class MovimentacaoDAO {
             return false;
         }
     }
-    
-    // Método específico para adicionar entradas de estoque
-    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor, Usuario usuario) {
-        // Verifica se é uma entrada e se um fornecedor foi fornecido
+
+    /*public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor, Usuario usuario) {
         if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedor == null) {
             System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
             return false;
         }
 
-        // Cria a movimentação de entrada
         Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, null);
 
-        // Chama diretamente o método inserirMovimentacao dentro da classe MovimentacaoDAO
         return inserirMovimentacao(movimentacao);
+    }*/
+    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor, Usuario usuario) {
+
+        System.out.println("Tipo de Movimentação: " + tipoMovimentacao);
+        System.out.println("Fornecedor recebido no método: " + (fornecedor != null ? fornecedor.getIdFornecedor() : "null"));
+
+        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedor == null) {
+            System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
+            return false;
+        }
+
+        // Exibe informações sobre o produto e outros parâmetros
+        System.out.println("Produto selecionado ID: " + (produto != null ? produto.getIdProduto() : "Nenhum"));
+        System.out.println("Quantidade: " + quantidade);
+        System.out.println("Data: " + data);
+        System.out.println("Usuário: " + (usuario != null ? usuario.getIdUsuario() : "Nenhum"));
+
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, null);
+
+        boolean resultado = inserirMovimentacao(movimentacao);
+
+        if (resultado) {
+            System.out.println("Movimentação adicionada com sucesso.");
+        } else {
+            System.out.println("Falha ao adicionar movimentação ao estoque.");
+        }
+
+        return resultado;
     }
 
     public boolean atualizarMovimentacao(Movimentacao movimentacao) {
@@ -93,32 +121,47 @@ public class MovimentacaoDAO {
         }
     }
 
-    /*public List<Movimentacao> obterMovimentacao() {
+    public ArrayList<Movimentacao> obterMovimentacao(ProdutoController produtoController,
+            UsuarioController usuarioController,
+            FornecedorController fornecedorController,
+            ClienteController clienteController) {
+        ArrayList<Movimentacao> listaMovimentacao = new ArrayList<>();
         String sql = "SELECT * FROM movimentacao_estoque";
-        List<Movimentacao> movimentacoes = new ArrayList<>();
 
         try (Connection con = new Conexao().obterConexao(); PreparedStatement pstm = con.prepareStatement(sql); ResultSet rs = pstm.executeQuery()) {
 
             while (rs.next()) {
-                int idMovimentacao = rs.getInt("id_movimentacao");
-                TipoMovimentacao tipoMovimentacao = new TipoMovimentacaoDAO().buscarTipoMovimentacaoPorId(rs.getInt("id_tipo_movimentacao"));
-                int quantidade = rs.getInt("quantidade");
+                Movimentacao movimentacao = new Movimentacao();
+                movimentacao.setIdMovimentacao(rs.getInt("id_movimentacao"));
+
+                TipoMovimentacaoEnum tipoMovimentacao = TipoMovimentacaoEnum.fromId(rs.getInt("id_tipo_movimentacao"));
+                movimentacao.setTipoMovimentacao(tipoMovimentacao);
+
+                movimentacao.setQuantidade(rs.getInt("quantidade"));
+
                 LocalDate data = rs.getDate("data").toLocalDate();
-                Produto produto = new ProdutoDAO().buscarProdutoPorId(rs.getInt("id_produto"));
-                Usuario usuario = new UsuarioDAO().buscarUsuarioPorId(rs.getInt("id_usuario"));
-                Fornecedor fornecedor = rs.getInt("id_fornecedor") > 0 ? new FornecedorDAO().buscarFornecedorPorId(rs.getInt("id_fornecedor")) : null;
-                Cliente cliente = rs.getInt("id_cliente") > 0 ? new ClienteDAO().buscarClientePorId(rs.getInt("id_cliente")) : null;
+                movimentacao.setData(data);
 
-                Movimentacao movimentacao = new Movimentacao(idMovimentacao, tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, cliente);
-                movimentacoes.add(movimentacao);
+                Produto produto = produtoController.buscarProdutoPorId(rs.getInt("id_produto"));
+                movimentacao.setProduto(produto);
+
+                Usuario usuario = usuarioController.buscarUsuarioPorId(rs.getInt("id_usuario"));
+                movimentacao.setUsuario(usuario);
+
+                Fornecedor fornecedor = fornecedorController.buscarFornecedorPorId(rs.getInt("id_fornecedor"));
+                movimentacao.setFornecedor(fornecedor);
+
+                Cliente cliente = clienteController.buscarClientePorId(rs.getInt("id_cliente"));
+                movimentacao.setCliente(cliente);
+
+                listaMovimentacao.add(movimentacao);
             }
-
         } catch (SQLException e) {
-            System.out.println("Erro ao obter movimentações. Erro: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        return movimentacoes;
-    }*/
+        return listaMovimentacao;
+    }
 
     public void deletarMovimentacaoPorId(int idMovimentacao) {
         String sql = "DELETE FROM movimentacao_estoque WHERE id_movimentacao = ?";

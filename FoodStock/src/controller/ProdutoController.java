@@ -5,21 +5,38 @@ import java.util.ArrayList;
 import model.Produto;
 
 public class ProdutoController {
-    private ProdutoDAO produtoDao = new ProdutoDAO();
+
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
     
+     public ProdutoController() {
+        this.produtoDAO = new ProdutoDAO();
+    }
+
     public void inserirProduto(String nome, String descricao, double preco_venda, double preco_custo, int quantidade, int categoria, int fornecedor) {
-        produtoDao.inserirProduto(nome, descricao, preco_venda, preco_custo, quantidade, categoria, fornecedor);
+        produtoDAO.inserirProduto(nome, descricao, preco_venda, preco_custo, quantidade, categoria, fornecedor);
     }
-    
+
     public ArrayList<Produto> obterProdutos() {
-        return produtoDao.obterProdutos();
+        return produtoDAO.obterProdutos();
     }
     
+    public ArrayList<Produto> buscarProdutos() {
+        return produtoDAO.buscarProdutos();
+    }
+
     public void deletarProdutoPorId(int id) {
-        produtoDao.deletarProdutoPorId(id);
+        produtoDAO.deletarProdutoPorId(id);
     }
-    
+
     public void atualizarProduto(int id, String nome, String descricao, double preco_venda, double preco_custo, int quantidade, int id_categoria, int id_fornecedor) {
-        produtoDao.atualizarProduto(id, nome, descricao, preco_venda, preco_custo, quantidade, id_categoria, id_fornecedor);
+        produtoDAO.atualizarProduto(id, nome, descricao, preco_venda, preco_custo, quantidade, id_categoria, id_fornecedor);
+    }
+
+    public String buscarNomeProdutoPorId(int id) {
+        return produtoDAO.buscarNomeProdutoPorId(id);
+    }
+
+    public Produto buscarProdutoPorId(int id) {
+        return produtoDAO.buscarProdutoPorId(id);
     }
 }

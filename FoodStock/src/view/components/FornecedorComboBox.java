@@ -25,9 +25,28 @@ public class FornecedorComboBox {
         }
     }
     
+     public void carregarFornecedoresEstoque(JComboBox<Fornecedor> comboBox) {
+        FornecedorController fornecedorController = new FornecedorController();
+        ArrayList<Fornecedor> fornecedores = fornecedorController.buscarFornecedores();
+
+        comboBox.removeAllItems();
+
+        for (Fornecedor fornecedor : fornecedores) {
+            comboBox.addItem(fornecedor); 
+        }
+    }
+    
     public int getFornecedorId(JComboBox<String> comboBox) {
         String nomeSelecionado = (String) comboBox.getSelectedItem();
         return fornecedorMap.get(nomeSelecionado);
+    }
+    
+    public int getFornecedorIdEstoque(JComboBox<Fornecedor> comboBox) {
+        Fornecedor fornecedorSelecionado = (Fornecedor) comboBox.getSelectedItem();
+        if (fornecedorSelecionado != null) {
+            return fornecedorSelecionado.getIdFornecedor(); 
+        }
+        return -1; 
     }
    
 }

@@ -1,18 +1,89 @@
 package view;
 
+import controller.ClienteController;
+import controller.FornecedorController;
+import controller.MovimentacaoController;
+import controller.ProdutoController;
+import controller.UsuarioController;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
+import model.Movimentacao;
 
 public class SaidaEstoqueView extends javax.swing.JFrame {
 
+    MovimentacaoController movimentacaoController = new MovimentacaoController();
+    ProdutoController produtoController = new ProdutoController();
+    FornecedorController fornecedorController = new FornecedorController();
+    ClienteController clienteController = new ClienteController();
+    UsuarioController usuarioController = new UsuarioController();
+
     public SaidaEstoqueView() {
         initComponents();
-        
+
         //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        Color backgroundDashboard = new Color(241,245,246);
+        Color backgroundDashboard = new Color(241, 245, 246);
         getContentPane().setBackground(backgroundDashboard);
+
+        ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
+
+        // Filtrar apenas as entradas (ou saídas, conforme sua necessidade)
+        List<Movimentacao> saidasFiltradas = filtrarMovimentacoes(listaMovimentacao, "saida"); // Troque "entrada" por "saida" se necessário
+
+        String[] colunas = {
+            "ID",
+            "Tipo Movimentação",
+            "Quantidade",
+            "Data",
+            "Produto",
+            "Usuario",
+            "Fornecedor",
+            "Cliente"
+        };
+        DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+        jTable.setModel(dtm);
+
+        for (Movimentacao movimentacao : saidasFiltradas) {
+            // Obter IDs de forma segura
+            int idUsuario = (movimentacao.getUsuario() != null) ? movimentacao.getUsuario().getIdUsuario() : -1;
+            int idCliente = (movimentacao.getCliente() != null) ? movimentacao.getCliente().getIdCliente() : -1;
+            int idFornecedor = (movimentacao.getFornecedor() != null) ? movimentacao.getFornecedor().getIdFornecedor() : -1;
+            int idProduto = (movimentacao.getProduto() != null) ? movimentacao.getProduto().getIdProduto() : -1;
+
+            // Obter nomes, considerando que podem não existir
+            String nomeUsuario = (idUsuario != -1) ? usuarioController.buscarNomeUsuarioPorId(idUsuario) : "Não disponível";
+            String nomeCliente = (idCliente != -1) ? clienteController.buscarNomeClientePorId(idCliente) : "Não disponível";
+            String nomeFornecedor = (idFornecedor != -1) ? fornecedorController.buscarNomeFornecedorPorId(idFornecedor) : "Não disponível";
+            String nomeProduto = (idProduto != -1) ? produtoController.buscarNomeProdutoPorId(idProduto) : "Não disponível";
+
+            // Adicionar a linha à tabela
+            Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
+                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+            dtm.addRow(obj);
+        }
+
+        // Ocultar colunas indesejadas
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTable.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(0);
+    }
+
+    private List<Movimentacao> filtrarMovimentacoes(List<Movimentacao> movimentacoes, String tipo) {
+        List<Movimentacao> filtradas = new ArrayList<>();
+        for (Movimentacao mov : movimentacoes) {
+            if ("saida".equals(tipo) && mov.getTipoMovimentacao().isSaida()) {
+                filtradas.add(mov);
+            } else if ("entrada".equals(tipo) && !mov.getTipoMovimentacao().isSaida()) {
+                filtradas.add(mov);
+            }
+        }
+        return filtradas;
     }
 
     @SuppressWarnings("unchecked")
@@ -167,7 +238,7 @@ public class SaidaEstoqueView extends javax.swing.JFrame {
         jBtnAddNovaSaidaEstoque.setBackground(new java.awt.Color(204, 51, 0));
         jBtnAddNovaSaidaEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jBtnAddNovaSaidaEstoque.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnAddNovaSaidaEstoque.setText("Nova saída de estoque");
+        jBtnAddNovaSaidaEstoque.setText("Nova venda");
         jBtnAddNovaSaidaEstoque.setBorder(null);
         jBtnAddNovaSaidaEstoque.setBorderPainted(false);
         jBtnAddNovaSaidaEstoque.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +367,7 @@ public class SaidaEstoqueView extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /*void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);

@@ -57,7 +57,6 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jTFLogradouro = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jBtVoltar = new javax.swing.JButton();
         jTFCnpj = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -86,6 +85,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(31, 73, 90));
         jLabel2.setText("Nome");
 
+        jTFNome.setEditable(false);
         jTFNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFNomeActionPerformed(evt);
@@ -96,6 +96,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(31, 73, 90));
         jLabel3.setText("Cnpj");
 
+        jTFCep.setEditable(false);
         jTFCep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFCepActionPerformed(evt);
@@ -106,6 +107,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(31, 73, 90));
         jLabel5.setText("Bairro");
 
+        jTFNumero.setEditable(false);
         jTFNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFNumeroActionPerformed(evt);
@@ -116,6 +118,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(31, 73, 90));
         jLabel6.setText("Logradouro");
 
+        jTFLogradouro.setEditable(false);
         jTFLogradouro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFLogradouroActionPerformed(evt);
@@ -130,16 +133,6 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(31, 73, 90));
         jLabel8.setText("Município");
 
-        jButton1.setBackground(new java.awt.Color(31, 73, 90));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(253, 253, 253));
-        jButton1.setText("Confirmar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jBtVoltar.setBackground(new java.awt.Color(253, 253, 253));
         jBtVoltar.setText("Voltar");
         jBtVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,6 +141,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
             }
         });
 
+        jTFCnpj.setEditable(false);
         jTFCnpj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFCnpjActionPerformed(evt);
@@ -158,6 +152,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(31, 73, 90));
         jLabel9.setText("E-mail");
 
+        jTFEmail.setEditable(false);
         jTFEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFEmailActionPerformed(evt);
@@ -168,12 +163,14 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(31, 73, 90));
         jLabel10.setText("Número");
 
+        jTFBairro.setEditable(false);
         jTFBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFBairroActionPerformed(evt);
             }
         });
 
+        jTFMunicipio.setEditable(false);
         jTFMunicipio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFMunicipioActionPerformed(evt);
@@ -184,6 +181,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(31, 73, 90));
         jLabel11.setText("Estado");
 
+        jTFEstado.setEditable(false);
         jTFEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFEstadoActionPerformed(evt);
@@ -194,6 +192,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(31, 73, 90));
         jLabel12.setText("País");
 
+        jTFPais.setEditable(false);
         jTFPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFPaisActionPerformed(evt);
@@ -204,6 +203,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(31, 73, 90));
         jLabel13.setText("Telefone");
 
+        jTFTelefone.setEditable(false);
         jTFTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFTelefoneActionPerformed(evt);
@@ -225,9 +225,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jBtInserir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBtVoltar)
                 .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -270,7 +268,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(224, 224, 224)
                         .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,8 +325,7 @@ public class VerFornecedorView extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTFEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTFPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(81, 81, 81))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -363,32 +360,6 @@ public class VerFornecedorView extends javax.swing.JFrame {
     private void jTFLogradouroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFLogradouroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFLogradouroActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nome = jTFNome.getText();
-        String cnpj = jTFCnpj.getText();
-        String email = jTFEmail.getText();
-        String telefone = jTFTelefone.getText();
-        String bairro = jTFBairro.getText();
-        String numero = jTFNumero.getText();
-        String logradouro = jTFLogradouro.getText();
-        String cep = jTFCep.getText();
-        String municipio = jTFMunicipio.getText();
-        String estado = jTFEstado.getText();
-        String pais = jTFPais.getText();
-        
-        int telefoneId = telefoneController.inserirTelefone(telefone);
-        int enderecoId = enderecoController.inserirEndereco(logradouro, bairro, numero, cep, municipio, estado, pais);
-        
-        if (telefoneId != -1 && enderecoId != -1) {
-            fornecedorController.inserirFornecedor(nome, cnpj, email, enderecoId, telefoneId);
-
-            JOptionPane.showMessageDialog(null, "Fornecedor inserido com sucesso.", "Confirma��o", JOptionPane.INFORMATION_MESSAGE);
-            limparCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir fornecedor.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTFNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFNomeActionPerformed
         // TODO add your handling code here:
@@ -494,7 +465,6 @@ public class VerFornecedorView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtInserir;
     private javax.swing.JButton jBtVoltar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

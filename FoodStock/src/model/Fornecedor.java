@@ -65,5 +65,8 @@ public class Fornecedor {
         this.telefone = telefone;
     }
     
-    
+    @Override
+    public String toString() {
+        return this.nome; // Retorna o nome do fornecedor
+    }
 }

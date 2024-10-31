@@ -320,6 +320,7 @@ public class CadastrarClienteView extends javax.swing.JFrame {
         }
 
         limparCampos();
+        
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jTFCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFCEPActionPerformed

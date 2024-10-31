@@ -4,11 +4,18 @@ import controller.ClienteController;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import view.components.ClienteComboBox;
+import view.components.FornecedorComboBox;
+import view.components.ProdutoComboBox;
 
 public class CadastrarSaidaEstoqueView extends javax.swing.JFrame {
 
     ClienteController clienteController = new ClienteController();
 
+    FornecedorComboBox fornecedorCB = new FornecedorComboBox();
+    ProdutoComboBox produtoCB = new ProdutoComboBox();
+    ClienteComboBox clienteCB = new ClienteComboBox();
+    
     public CadastrarSaidaEstoqueView() {
         initComponents();
 

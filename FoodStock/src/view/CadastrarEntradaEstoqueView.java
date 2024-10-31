@@ -8,10 +8,16 @@ import javax.swing.JOptionPane;
 import model.Fornecedor;
 import model.Produto;
 import model.TipoMovimentacaoEnum;
+import model.Usuario;
+import view.components.FornecedorComboBox;
+import view.components.ProdutoComboBox;
 
 public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
 
     MovimentacaoController movimentacaoController = new MovimentacaoController();
+
+    FornecedorComboBox fornecedorComboBox = new FornecedorComboBox();
+    ProdutoComboBox produtoComboBox = new ProdutoComboBox();
 
     public CadastrarEntradaEstoqueView() {
         initComponents();
@@ -21,6 +27,9 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
         getContentPane().setBackground(backgroundDashboard);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        produtoComboBox.carregarProdutos(jCBProduto);
+        fornecedorComboBox.carregarFornecedoresEstoque(jCBFornecedor);
     }
 
     @SuppressWarnings("unchecked")
@@ -35,8 +44,8 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jTFQuantidade = new javax.swing.JTextField();
         jBtnVoltar = new javax.swing.JButton();
-        jCBFornecedores = new javax.swing.JComboBox<>();
-        jCBProdutos = new javax.swing.JComboBox<>();
+        jCBFornecedor = new javax.swing.JComboBox<>();
+        jCBProduto = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(720, 480));
@@ -85,9 +94,14 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
             }
         });
 
-        jCBFornecedores.setBackground(new java.awt.Color(194, 207, 214));
+        jCBFornecedor.setBackground(new java.awt.Color(194, 207, 214));
 
-        jCBProdutos.setBackground(new java.awt.Color(194, 207, 214));
+        jCBProduto.setBackground(new java.awt.Color(194, 207, 214));
+        jCBProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBProdutoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,23 +118,24 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
                         .addGap(71, 71, 71)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCBFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addGap(0, 27, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jCBProdutos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jCBProduto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jCBFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(54, 54, 54)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel10)
                                         .addGap(90, 90, 90))
-                                    .addComponent(jTFQuantidade)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(71, Short.MAX_VALUE))
+                                    .addComponent(jTFQuantidade))))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,12 +148,12 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCBProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCBFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCBFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(106, 106, 106)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,14 +186,23 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         try {
-        int quantidade = Integer.parseInt(jTFQuantidade.getText()); 
-        Produto produto = (Produto) jCBProdutos.getSelectedItem();  
-        Fornecedor fornecedor = (Fornecedor) jCBFornecedores.getSelectedItem();  
+        int quantidade = Integer.parseInt(jTFQuantidade.getText());
 
-        TipoMovimentacaoEnum tipoMovimentacao = TipoMovimentacaoEnum.ENTRADA;  // Enum direto
-        LocalDate dataAtual = LocalDate.now();  
+        int produto = produtoComboBox.getProdutoId(jCBProduto);
+        int fornecedor = fornecedorComboBox.getFornecedorIdEstoque(jCBFornecedor);
 
-        // Chamando o método com o enum como argumento
+        if (fornecedor == -1) {
+            JOptionPane.showMessageDialog(null, "Por favor, selecione um fornecedor.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+
+        System.out.println("Produto selecionado ID: " + produto);
+        System.out.println("Fornecedor selecionado ID: " + fornecedor);
+        System.out.println("Quantidade: " + quantidade);
+
+        TipoMovimentacaoEnum tipoMovimentacao = TipoMovimentacaoEnum.ENTRADA;
+        LocalDate dataAtual = LocalDate.now();
+
         boolean inserido = movimentacaoController.adicionarEntradaEstoque(tipoMovimentacao, dataAtual, quantidade, produto, fornecedor);
 
         if (inserido) {
@@ -187,11 +211,17 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao inserir entrada de estoque.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        limparCampos(); 
+        limparCampos();
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(null, "Por favor, insira uma quantidade válida.", "Erro", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Erro inesperado: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
+
+    private void jCBProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBProdutoActionPerformed
 
     private void limparCampos() {
         jTFQuantidade.setText("");
@@ -209,8 +239,8 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConfirmar;
     private javax.swing.JButton jBtnVoltar;
-    private javax.swing.JComboBox<String> jCBFornecedores;
-    private javax.swing.JComboBox<String> jCBProdutos;
+    private javax.swing.JComboBox<Fornecedor> jCBFornecedor;
+    private javax.swing.JComboBox<Produto> jCBProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

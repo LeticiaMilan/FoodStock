@@ -1,18 +1,89 @@
 package view;
 
+import controller.ClienteController;
+import controller.FornecedorController;
+import controller.MovimentacaoController;
+import controller.ProdutoController;
+import controller.UsuarioController;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
+import model.Movimentacao;
 
 public class EntradaEstoqueView extends javax.swing.JFrame {
 
+    MovimentacaoController movimentacaoController = new MovimentacaoController();
+    ProdutoController produtoController = new ProdutoController();
+    FornecedorController fornecedorController = new FornecedorController();
+    ClienteController clienteController = new ClienteController();
+    UsuarioController usuarioController = new UsuarioController();
+
     public EntradaEstoqueView() {
         initComponents();
-        
+
         //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        Color backgroundDashboard = new Color(241,245,246);
+        Color backgroundDashboard = new Color(241, 245, 246);
         getContentPane().setBackground(backgroundDashboard);
+
+        ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
+
+        // Filtrar apenas as entradas (ou saídas, conforme sua necessidade)
+        List<Movimentacao> entradasFiltradas = filtrarMovimentacoes(listaMovimentacao, "entrada"); // Troque "entrada" por "saida" se necessário
+
+        String[] colunas = {
+            "ID",
+            "Tipo Movimentação",
+            "Quantidade",
+            "Data",
+            "Produto",
+            "Usuario",
+            "Fornecedor",
+            "Cliente"
+        };
+        DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+        jTable.setModel(dtm);
+
+        for (Movimentacao movimentacao : entradasFiltradas) {
+            // Obter IDs de forma segura
+            int idUsuario = (movimentacao.getUsuario() != null) ? movimentacao.getUsuario().getIdUsuario() : -1;
+            int idCliente = (movimentacao.getCliente() != null) ? movimentacao.getCliente().getIdCliente() : -1;
+            int idFornecedor = (movimentacao.getFornecedor() != null) ? movimentacao.getFornecedor().getIdFornecedor() : -1;
+            int idProduto = (movimentacao.getProduto() != null) ? movimentacao.getProduto().getIdProduto() : -1;
+
+            // Obter nomes, considerando que podem não existir
+            String nomeUsuario = (idUsuario != -1) ? usuarioController.buscarNomeUsuarioPorId(idUsuario) : "Não disponível";
+            String nomeCliente = (idCliente != -1) ? clienteController.buscarNomeClientePorId(idCliente) : "Não disponível";
+            String nomeFornecedor = (idFornecedor != -1) ? fornecedorController.buscarNomeFornecedorPorId(idFornecedor) : "Não disponível";
+            String nomeProduto = (idProduto != -1) ? produtoController.buscarNomeProdutoPorId(idProduto) : "Não disponível";
+
+            // Adicionar a linha à tabela
+            Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
+                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+            dtm.addRow(obj);
+        }
+
+        // Ocultar colunas indesejadas
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTable.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(0);
+    }
+
+    private List<Movimentacao> filtrarMovimentacoes(List<Movimentacao> movimentacoes, String tipo) {
+        List<Movimentacao> filtradas = new ArrayList<>();
+        for (Movimentacao mov : movimentacoes) {
+            if ("entrada".equals(tipo) && mov.getTipoMovimentacao().isEntrada()) {
+                filtradas.add(mov);
+            } else if ("saida".equals(tipo) && !mov.getTipoMovimentacao().isEntrada()) {
+                filtradas.add(mov);
+            }
+        }
+        return filtradas;
     }
 
     @SuppressWarnings("unchecked")
@@ -152,7 +223,7 @@ public class EntradaEstoqueView extends javax.swing.JFrame {
         jBtnAddNovaEntradaEstoque.setBackground(new java.awt.Color(51, 153, 0));
         jBtnAddNovaEntradaEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jBtnAddNovaEntradaEstoque.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnAddNovaEntradaEstoque.setText("Nova entrada de estoque");
+        jBtnAddNovaEntradaEstoque.setText("Nova compra");
         jBtnAddNovaEntradaEstoque.setBorder(null);
         jBtnAddNovaEntradaEstoque.setBorderPainted(false);
         jBtnAddNovaEntradaEstoque.addActionListener(new java.awt.event.ActionListener() {
@@ -210,14 +281,15 @@ public class EntradaEstoqueView extends javax.swing.JFrame {
             jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPnLayoutLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnAddNovaEntradaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPnLayoutLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jBtnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPnLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnAddNovaEntradaEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(67, Short.MAX_VALUE))
@@ -291,7 +363,7 @@ public class EntradaEstoqueView extends javax.swing.JFrame {
             }
         });
     }
-    
+
     /*void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) jTable.getModel();
         model.setRowCount(0);

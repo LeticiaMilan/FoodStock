@@ -93,5 +93,10 @@ public class Produto {
     public void setFornecedor(int fornecedor) {
         this.fornecedor = fornecedor;
     }
+    
+    @Override
+    public String toString() {
+        return this.nome; 
+    }
   
 }

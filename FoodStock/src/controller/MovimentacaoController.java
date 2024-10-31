@@ -1,7 +1,10 @@
 package controller;
 
+import dao.FornecedorDAO;
 import dao.MovimentacaoDAO;
+import dao.ProdutoDAO;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
 import model.Fornecedor;
@@ -13,6 +16,8 @@ import model.Usuario;
 
 public class MovimentacaoController {
 
+    private ProdutoDAO produtoDAO;
+    private FornecedorDAO fornecedorDAO;
     private MovimentacaoDAO movimentacaoDAO;
 
     public MovimentacaoController() {
@@ -20,7 +25,6 @@ public class MovimentacaoController {
     }
 
     public boolean adicionarMovimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
-        // Verifica se o tipoMovimentacao corresponde ao ID esperado para "Entrada"
         if (tipoMovimentacao.getId() == TipoMovimentacaoEnum.ENTRADA.getId() && fornecedor == null) {
             System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
             return false;
@@ -34,7 +38,6 @@ public class MovimentacaoController {
     }
 
     /*public boolean atualizarMovimentacao(int idMovimentacao, TipoMovimentacao tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
-        // Obtém o id do enum associado ao TipoMovimentacao
         int tipoMovimentacaoId = tipoMovimentacao.getTipoMovimentacaoEnum().getId();
 
         if (tipoMovimentacaoId == TipoMovimentacaoEnum.ENTRADA.getId() && fornecedor == null) {
@@ -48,23 +51,69 @@ public class MovimentacaoController {
         Movimentacao movimentacao = new Movimentacao(idMovimentacao, tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, cliente);
         return movimentacaoDAO.atualizarMovimentacao(movimentacao);
     }*/
+    public ArrayList<Movimentacao> obterMovimentacao(ProdutoController produtoController,
+            UsuarioController usuarioController,
+            FornecedorController fornecedorController,
+            ClienteController clienteController) {
+        return movimentacaoDAO.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
+    }
 
-    /*public List<Movimentacao> obterMovimentacao() {
-        return movimentacaoDAO.obterMovimentacao(); 
-    }*/
     public void deletarMovimentacaoPorId(int idMovimentacao) {
         movimentacaoDAO.deletarMovimentacaoPorId(idMovimentacao);
     }
 
-    
-    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor) {
-    if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedor == null) {
-        System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
-        return false;
+    /*public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor) {
+        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedor == null) {
+            System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
+            return false;
+        }
+
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
+        return movimentacaoDAO.inserirMovimentacao(movimentacao);
+    }*/
+ /*public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, int produtoId, int fornecedorId) {
+        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA) {
+            System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
+            return false;
+        }
+
+        Produto produto = produtoDAO.buscarProdutoPorId(produtoId);
+        if (produto == null) {
+            System.out.println("Erro: Produto não encontrado.");
+            return false;
+        }
+        
+        Fornecedor fornecedor = fornecedorDAO.buscarFornecedorPorId(fornecedorId);
+        if (fornecedor == null) {
+            System.out.println("Erro: Produto não encontrado.");
+            return false;
+        }
+
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
+        return movimentacaoDAO.inserirMovimentacao(movimentacao);
+    }*/
+    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, int produtoId, int fornecedorId) {
+        Produto produto = produtoDAO.buscarProdutoPorId(produtoId);
+        if (produto == null) {
+            System.out.println("Erro: Produto não encontrado.");
+            return false;
+        }
+
+        if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA) {
+            if (fornecedorId <= 0) { 
+                System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
+                return false;
+            }
+        }
+
+        Fornecedor fornecedor = fornecedorDAO.buscarFornecedorPorId(fornecedorId);
+        if (fornecedor == null) {
+            System.out.println("Erro: Fornecedor não encontrado.");
+            return false;
+        }
+
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
+
+        return movimentacaoDAO.inserirMovimentacao(movimentacao);
     }
-    
-    // Criação da nova movimentação
-    Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
-    return movimentacaoDAO.inserirMovimentacao(movimentacao);
-}
 }
