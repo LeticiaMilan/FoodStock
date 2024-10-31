@@ -1,17 +1,24 @@
 package dao;
 
 import connection.Conexao;
+import controller.MovimentacaoController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import model.Usuario;
+import view.CadastrarEntradaEstoqueView;
+import view.HomeView;
+import view.LoginView;
 
 public class LoginDAO {
 
     private static Connection con;
+    private static Usuario usuarioSessao;
+    private static LoginView mov;
     
-    public int fazerLogin(String email, String senha) {
+    public Usuario fazerLogin(String email, String senha) {
         if(email.isBlank() || senha.isBlank()) {
-            return 2;
+            return new Usuario(-1, "", "");
         }
         
         String sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?;";
@@ -24,17 +31,23 @@ public class LoginDAO {
             pstm.setString(2, senha);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
+                int id = rs.getInt("id_usuario");
+                String nome = rs.getString("nome");
+                
                 System.out.println("Login bem-sucedido!");
-                return 1;
+                
+                usuarioSessao = new Usuario(id, nome, email);
+                
+                return usuarioSessao;
             } else {
                 System.out.println("Usuário não encontrado ou senha incorreta.");
-                return 0;
+                return new Usuario(0, "", "");
             }
         } catch (Exception e) {
             System.out.println("Não foi possível fazer login. Erro: " + e);
         }
         
-        return 1;
+        return usuarioSessao;
     }
 
 }

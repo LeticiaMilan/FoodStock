@@ -19,9 +19,21 @@ public class MovimentacaoController {
     private ProdutoDAO produtoDAO;
     private FornecedorDAO fornecedorDAO;
     private MovimentacaoDAO movimentacaoDAO;
+    
+    private Usuario usuarioSessao;
 
+    public Usuario getUsuarioSessao() {
+        return usuarioSessao;
+    }
+
+    public void setUsuarioSessao(Usuario usuarioSessao) {
+        this.usuarioSessao = usuarioSessao;
+    }
+    
     public MovimentacaoController() {
         movimentacaoDAO = new MovimentacaoDAO();
+        produtoDAO = new ProdutoDAO();
+        fornecedorDAO = new FornecedorDAO();
     }
 
     public boolean adicionarMovimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
@@ -92,7 +104,7 @@ public class MovimentacaoController {
         Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
         return movimentacaoDAO.inserirMovimentacao(movimentacao);
     }*/
-    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, int produtoId, int fornecedorId) {
+    public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, int produtoId, int fornecedorId, Usuario usuarioSessao) {
         Produto produto = produtoDAO.buscarProdutoPorId(produtoId);
         if (produto == null) {
             System.out.println("Erro: Produto não encontrado.");
@@ -111,8 +123,9 @@ public class MovimentacaoController {
             System.out.println("Erro: Fornecedor não encontrado.");
             return false;
         }
-
-        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, null, fornecedor, null);
+        
+        
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuarioSessao, fornecedor, null);
 
         return movimentacaoDAO.inserirMovimentacao(movimentacao);
     }

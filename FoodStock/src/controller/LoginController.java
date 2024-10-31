@@ -1,12 +1,13 @@
 package controller;
 
 import dao.LoginDAO;
+import model.Usuario;
 
 public class LoginController {
     LoginDAO loginDAO = new LoginDAO();
     UsuarioController usuarioController = new UsuarioController();
 
-    public int fazerLogin(String email, String senha) {
+    public Usuario fazerLogin(String email, String senha) {
         return loginDAO.fazerLogin(email, senha); 
     }
 

@@ -41,7 +41,7 @@ public class RegistroView extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login");
+        setTitle("Criar conta");
         setMinimumSize(new java.awt.Dimension(750, 430));
         setSize(new java.awt.Dimension(750, 430));
 

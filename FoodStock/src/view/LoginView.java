@@ -2,11 +2,11 @@ package view;
 
 import controller.LoginController;
 import javax.swing.JOptionPane;
+import model.Usuario;
 
 public class LoginView extends javax.swing.JFrame {
 
     LoginController loginController = new LoginController();
-
     public LoginView() {
         initComponents();
     }
@@ -210,9 +210,9 @@ public class LoginView extends javax.swing.JFrame {
         String email = jTFEmail.getText();
         String senha = jPFSenha.getText();
 
-        int userId = loginController.fazerLogin(email, senha);
+        Usuario user = loginController.fazerLogin(email, senha);
 
-        switch (userId) {
+        switch (user.getIdUsuario()) {
             case -1:
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Alerta", JOptionPane.WARNING_MESSAGE);
                 break;
@@ -222,9 +222,9 @@ public class LoginView extends javax.swing.JFrame {
             default: 
                 JOptionPane.showMessageDialog(null, "Login realizado com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
 
-                String nomeUsuario = loginController.getNomeUsuario(userId);
+                String nomeUsuario = user.getNome();
 
-                HomeView homeView = new HomeView();
+                HomeView homeView = new HomeView(user);
                 homeView.setUsuarioNome(nomeUsuario);
                 homeView.setVisible(true);
 

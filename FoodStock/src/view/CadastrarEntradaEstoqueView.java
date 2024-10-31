@@ -18,9 +18,25 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
 
     FornecedorComboBox fornecedorComboBox = new FornecedorComboBox();
     ProdutoComboBox produtoComboBox = new ProdutoComboBox();
+    
+    Usuario usuarioSessao;
 
     public CadastrarEntradaEstoqueView() {
         initComponents();
+
+        //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        Color backgroundDashboard = new Color(255, 255, 255);
+        getContentPane().setBackground(backgroundDashboard);
+
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        produtoComboBox.carregarProdutos(jCBProduto);
+        fornecedorComboBox.carregarFornecedoresEstoque(jCBFornecedor);
+    }
+    
+    public CadastrarEntradaEstoqueView(Usuario usuarioSessao) {
+        initComponents();
+        this.usuarioSessao = usuarioSessao;
 
         //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
         Color backgroundDashboard = new Color(255, 255, 255);
@@ -203,8 +219,8 @@ public class CadastrarEntradaEstoqueView extends javax.swing.JFrame {
         TipoMovimentacaoEnum tipoMovimentacao = TipoMovimentacaoEnum.ENTRADA;
         LocalDate dataAtual = LocalDate.now();
 
-        boolean inserido = movimentacaoController.adicionarEntradaEstoque(tipoMovimentacao, dataAtual, quantidade, produto, fornecedor);
-
+        boolean inserido = movimentacaoController.adicionarEntradaEstoque(tipoMovimentacao, dataAtual, quantidade, produto, fornecedor, this.usuarioSessao);
+        
         if (inserido) {
             JOptionPane.showMessageDialog(null, "Entrada de estoque inserida com sucesso.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
         } else {

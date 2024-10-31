@@ -9,9 +9,9 @@ public class Conexao {
     private Connection con;
 
     public Conexao() {
-        url = "jdbc:postgresql://localhost:5432/Estoque_BD";
+        url = "jdbc:postgresql://localhost:5432/Foodstock";
         usuario = "postgres";
-        senha = "123";
+        senha = "dbadmin";
 
         try {
             Class.forName("org.postgresql.Driver");
