@@ -62,21 +62,40 @@ public class MovimentacaoDAO {
     }*/
     public boolean adicionarEntradaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Fornecedor fornecedor, Usuario usuario) {
 
-        System.out.println("Tipo de Movimentação: " + tipoMovimentacao);
-        System.out.println("Fornecedor recebido no método: " + (fornecedor != null ? fornecedor.getIdFornecedor() : "null"));
-
         if (tipoMovimentacao == TipoMovimentacaoEnum.ENTRADA && fornecedor == null) {
             System.out.println("Erro: Fornecedor é necessário para movimentações de entrada.");
             return false;
         }
 
-        // Exibe informações sobre o produto e outros parâmetros
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, null);
+
+        boolean resultado = inserirMovimentacao(movimentacao);
+
+        if (resultado) {
+            System.out.println("Movimentação adicionada com sucesso.");
+        } else {
+            System.out.println("Falha ao adicionar movimentação ao estoque.");
+        }
+
+        return resultado;
+    }
+    
+    public boolean adicionarSaidaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, Produto produto, Cliente cliente, Usuario usuario) {
+
+        System.out.println("Tipo de Movimentação: " + tipoMovimentacao);
+        System.out.println("Cliente recebido no método: " + (cliente != null ? cliente.getIdCliente() : "null"));
+
+        if (tipoMovimentacao == TipoMovimentacaoEnum.SAIDA && cliente == null) {
+            System.out.println("Erro: Cliente é necessário para movimentações de entrada.");
+            return false;
+        }
+
         System.out.println("Produto selecionado ID: " + (produto != null ? produto.getIdProduto() : "Nenhum"));
         System.out.println("Quantidade: " + quantidade);
         System.out.println("Data: " + data);
         System.out.println("Usuário: " + (usuario != null ? usuario.getIdUsuario() : "Nenhum"));
 
-        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuario, fornecedor, null);
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuario, null, cliente);
 
         boolean resultado = inserirMovimentacao(movimentacao);
 

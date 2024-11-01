@@ -1,8 +1,8 @@
 package model;
 
 public enum TipoMovimentacaoEnum {
-    ENTRADA(5),
-    SAIDA(6);
+    ENTRADA(1),
+    SAIDA(2);
 
     private final int id;
     

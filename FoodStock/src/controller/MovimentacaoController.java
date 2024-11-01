@@ -1,5 +1,6 @@
 package controller;
 
+import dao.ClienteDAO;
 import dao.FornecedorDAO;
 import dao.MovimentacaoDAO;
 import dao.ProdutoDAO;
@@ -19,6 +20,7 @@ public class MovimentacaoController {
     private ProdutoDAO produtoDAO;
     private FornecedorDAO fornecedorDAO;
     private MovimentacaoDAO movimentacaoDAO;
+    private ClienteDAO clienteDAO;
     
     private Usuario usuarioSessao;
 
@@ -34,6 +36,7 @@ public class MovimentacaoController {
         movimentacaoDAO = new MovimentacaoDAO();
         fornecedorDAO = new FornecedorDAO();
         produtoDAO = new ProdutoDAO();
+        clienteDAO = new ClienteDAO();
     }
 
     public boolean adicionarMovimentacao(TipoMovimentacaoEnum tipoMovimentacao, int quantidade, LocalDate data, Produto produto, Usuario usuario, Fornecedor fornecedor, Cliente cliente) {
@@ -123,6 +126,29 @@ public class MovimentacaoController {
         }
 
         Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuarioSessao, fornecedor, null);
+
+        return movimentacaoDAO.inserirMovimentacao(movimentacao);
+    }
+    
+    public boolean adicionarSaidaEstoque(TipoMovimentacaoEnum tipoMovimentacao, LocalDate data, int quantidade, int produtoId, int clienteId, Usuario usuarioSessao) {
+        Produto produto = produtoDAO.buscarProdutoPorId(produtoId);
+        if (produto == null) {
+            System.out.println("Erro: Produto não encontrado.");
+            return false;
+        }
+
+        if (tipoMovimentacao == TipoMovimentacaoEnum.SAIDA && clienteId <= 0) {
+            System.out.println("Erro: Cliente é necessário para movimentações de entrada.");
+            return false;
+        }
+
+        Cliente cliente = clienteDAO.buscarClientePorId(clienteId);
+        if (cliente == null) {
+            System.out.println("Erro: Cliente não encontrado.");
+            return false;
+        }
+
+        Movimentacao movimentacao = new Movimentacao(tipoMovimentacao, quantidade, data, produto, usuarioSessao, cliente);
 
         return movimentacaoDAO.inserirMovimentacao(movimentacao);
     }

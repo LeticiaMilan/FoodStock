@@ -138,7 +138,6 @@ public class ClienteDAO {
                 Telefone telefone = buscarTelefonePorId(idTelefone);
                 Endereco endereco = buscarEnderecoPorId(idEndereco);
 
-                // objeto cliente com os dados recuperados
                 Cliente cliente = new Cliente(id, nome, cpfCnpj, email, endereco, telefone);
                 listaClientes.add(cliente); 
             }

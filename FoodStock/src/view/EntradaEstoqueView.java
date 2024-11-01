@@ -118,7 +118,7 @@ public class EntradaEstoqueView extends javax.swing.JFrame {
 
             // Adicionar a linha à tabela
             Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
-                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+                nomeProduto, (usuarioSessao != null) ? usuarioSessao.getNome() : "Não disponível", nomeFornecedor, nomeCliente};
             dtm.addRow(obj);
         }
 
@@ -399,7 +399,9 @@ public class EntradaEstoqueView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnProdutosMenuActionPerformed
 
     private void jBtnEstoqueMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEstoqueMenuActionPerformed
-        // TODO add your handling code here:
+        MovimentacaoView movimentacaoEstoque = new MovimentacaoView();
+        this.setVisible(false);
+        movimentacaoEstoque.setVisible(true);
     }//GEN-LAST:event_jBtnEstoqueMenuActionPerformed
 
     private void jBtnAddNovaEntradaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddNovaEntradaEstoqueActionPerformed

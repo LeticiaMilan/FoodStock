@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 import model.Movimentacao;
+import model.Usuario;
 
 public class SaidaEstoqueView extends javax.swing.JFrame {
 
@@ -19,6 +20,8 @@ public class SaidaEstoqueView extends javax.swing.JFrame {
     FornecedorController fornecedorController = new FornecedorController();
     ClienteController clienteController = new ClienteController();
     UsuarioController usuarioController = new UsuarioController();
+    
+    Usuario usuarioSessao;
 
     public SaidaEstoqueView() {
         initComponents();
@@ -29,8 +32,59 @@ public class SaidaEstoqueView extends javax.swing.JFrame {
 
         ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
 
-        // Filtrar apenas as entradas (ou saídas, conforme sua necessidade)
-        List<Movimentacao> saidasFiltradas = filtrarMovimentacoes(listaMovimentacao, "saida"); // Troque "entrada" por "saida" se necessário
+        List<Movimentacao> saidasFiltradas = filtrarMovimentacoes(listaMovimentacao, "saida"); 
+
+        String[] colunas = {
+            "ID",
+            "Tipo Movimentação",
+            "Quantidade",
+            "Data",
+            "Produto",
+            "Usuario",
+            "Cliente",
+            "Fornecedor"
+            
+        };
+        DefaultTableModel dtm = new DefaultTableModel(colunas, 0);
+        jTable.setModel(dtm);
+
+        for (Movimentacao movimentacao : saidasFiltradas) {
+            int idUsuario = (movimentacao.getUsuario() != null) ? movimentacao.getUsuario().getIdUsuario() : -1;
+            int idCliente = (movimentacao.getCliente() != null) ? movimentacao.getCliente().getIdCliente() : -1;
+            int idFornecedor = (movimentacao.getFornecedor() != null) ? movimentacao.getFornecedor().getIdFornecedor() : -1;
+            int idProduto = (movimentacao.getProduto() != null) ? movimentacao.getProduto().getIdProduto() : -1;
+
+            String nomeUsuario = (idUsuario != -1) ? usuarioController.buscarNomeUsuarioPorId(idUsuario) : "Letícia Milan";
+            String nomeCliente = (idCliente != -1) ? clienteController.buscarNomeClientePorId(idCliente) : "Não disponível";
+            String nomeFornecedor = (idFornecedor != -1) ? fornecedorController.buscarNomeFornecedorPorId(idFornecedor) : "Não disponível";
+            String nomeProduto = (idProduto != -1) ? produtoController.buscarNomeProdutoPorId(idProduto) : "Não disponível";
+
+            Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
+                nomeProduto, nomeUsuario, nomeCliente, nomeFornecedor};
+            dtm.addRow(obj);
+        }
+
+        // Ocultar colunas indesejadas
+        jTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        jTable.getColumnModel().getColumn(7).setMinWidth(0);
+        jTable.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(7).setPreferredWidth(0);
+    }
+    
+    public SaidaEstoqueView(Usuario usuarioSessao) {
+        initComponents();
+        this.usuarioSessao = usuarioSessao;
+
+        //setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        Color backgroundDashboard = new Color(241, 245, 246);
+        getContentPane().setBackground(backgroundDashboard);
+
+        ArrayList<Movimentacao> listaMovimentacao = movimentacaoController.obterMovimentacao(produtoController, usuarioController, fornecedorController, clienteController);
+
+        List<Movimentacao> saidasFiltradas = filtrarMovimentacoes(listaMovimentacao, "saida"); 
 
         String[] colunas = {
             "ID",
@@ -46,25 +100,21 @@ public class SaidaEstoqueView extends javax.swing.JFrame {
         jTable.setModel(dtm);
 
         for (Movimentacao movimentacao : saidasFiltradas) {
-            // Obter IDs de forma segura
             int idUsuario = (movimentacao.getUsuario() != null) ? movimentacao.getUsuario().getIdUsuario() : -1;
             int idCliente = (movimentacao.getCliente() != null) ? movimentacao.getCliente().getIdCliente() : -1;
             int idFornecedor = (movimentacao.getFornecedor() != null) ? movimentacao.getFornecedor().getIdFornecedor() : -1;
             int idProduto = (movimentacao.getProduto() != null) ? movimentacao.getProduto().getIdProduto() : -1;
 
-            // Obter nomes, considerando que podem não existir
             String nomeUsuario = (idUsuario != -1) ? usuarioController.buscarNomeUsuarioPorId(idUsuario) : "Não disponível";
             String nomeCliente = (idCliente != -1) ? clienteController.buscarNomeClientePorId(idCliente) : "Não disponível";
             String nomeFornecedor = (idFornecedor != -1) ? fornecedorController.buscarNomeFornecedorPorId(idFornecedor) : "Não disponível";
             String nomeProduto = (idProduto != -1) ? produtoController.buscarNomeProdutoPorId(idProduto) : "Não disponível";
 
-            // Adicionar a linha à tabela
             Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
-                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+                nomeProduto, (usuarioSessao != null) ? usuarioSessao.getNome() : "Não disponível", nomeFornecedor, nomeCliente};
             dtm.addRow(obj);
         }
 
-        // Ocultar colunas indesejadas
         jTable.getColumnModel().getColumn(0).setMinWidth(0);
         jTable.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -345,7 +395,9 @@ public class SaidaEstoqueView extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnProdutosMenuActionPerformed
 
     private void jBtnEstoqueMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEstoqueMenuActionPerformed
-        // TODO add your handling code here:
+        MovimentacaoView movimentacaoEstoque = new MovimentacaoView();
+        this.setVisible(false);
+        movimentacaoEstoque.setVisible(true);
     }//GEN-LAST:event_jBtnEstoqueMenuActionPerformed
 
     private void jBtnAddNovaSaidaEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddNovaSaidaEstoqueActionPerformed

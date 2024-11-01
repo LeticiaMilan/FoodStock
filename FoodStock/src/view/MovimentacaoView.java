@@ -58,7 +58,7 @@ public class MovimentacaoView extends javax.swing.JFrame {
 
             // Adicionar a linha à tabela
             Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
-                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+                nomeProduto, usuarioSessao.getNome(), nomeFornecedor, nomeCliente};
             dtm.addRow(obj);
         }
 
@@ -109,7 +109,7 @@ public class MovimentacaoView extends javax.swing.JFrame {
 
             // Adicionar a linha à tabela
             Object[] obj = {movimentacao.getIdMovimentacao(), movimentacao.getTipoMovimentacao(), movimentacao.getQuantidade(), movimentacao.getData(),
-                nomeProduto, nomeUsuario, nomeFornecedor, nomeCliente};
+                nomeProduto, (usuarioSessao != null) ? usuarioSessao.getNome() : "Não disponível", nomeFornecedor, nomeCliente};
             dtm.addRow(obj);
         }
 
